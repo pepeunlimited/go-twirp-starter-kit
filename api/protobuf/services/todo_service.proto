@@ -1,0 +1,60 @@
+syntax = "proto3";
+
+package pepeunlimited.twirpkit.services;
+option go_package = "github.com/pepeunlimited/go-twirp-starter-kit/pkg/api/v1/services";
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/field_mask.proto";
+
+// WARNING:
+// $ services/todo_service.proto:7:1: Import "foo/bar/xxx.proto" was not found or had errors.
+// try change the import folder path e.g. resources/todo.proto => protobuf/resources/todo.proto
+import "resources/todo.proto";
+
+service TodoService {
+
+    rpc CreateTodo(CreateTodoRequest)    returns (pepeunlimited.twirpkit.resources.Todo);
+
+    rpc GetTodo(GetTodoRequest)          returns (pepeunlimited.twirpkit.resources.Todo);
+
+    rpc ListTodo(ListTodoRequest)        returns (ListTodoResponse);
+
+    rpc UpdateTodo(UpdateTodoRequest)    returns (pepeunlimited.twirpkit.resources.Todo);
+
+    rpc DeleteTodo(DeleteTodoRequest)    returns (google.protobuf.Empty);
+}
+
+message CreateTodoRequest {
+    
+    string title = 1; // required
+}
+
+message GetTodoRequest {
+    
+    int64 id                             = 1; //required
+    google.protobuf.FieldMask field_mask = 2; // optional
+}
+
+message ListTodoRequest {
+
+    int32    page_size                   = 1;
+    int64    page_token                  = 2;
+    google.protobuf.FieldMask field_mask = 3; // optional
+}
+
+message ListTodoResponse {
+
+    repeated pepeunlimited.twirpkit.resources.Todo todos = 1;
+    int64 next_page_token                                = 2;
+}
+
+message UpdateTodoRequest {
+
+    pepeunlimited.twirpkit.resources.Todo operation = 1; //required
+    google.protobuf.FieldMask field_mask            = 2; // optional
+}
+
+message DeleteTodoRequest {
+    
+    int64 todo_id = 1; //required
+}

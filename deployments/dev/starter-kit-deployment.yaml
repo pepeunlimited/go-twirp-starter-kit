@@ -1,0 +1,44 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: go-twirp-starter-kit
+  labels:
+    app: go-twirp-starter-kit
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: go-twirp-starter-kit
+  template:
+    metadata:
+      labels:
+        app: go-twirp-starter-kit
+    spec:
+      containers:
+        - env:
+            - name: MYSQL_DATABASE
+              value: users
+            - name: MYSQL_HOST
+              value: external-mysql.default.svc
+            - name: MYSQL_PORT
+              value: "3306"
+            - name: MYSQL_ROOT_PASSWORD
+              value: root
+            - name: MYSQL_USER
+              value: root
+            - name: POSTGRESQL_DATABASE
+              value: users
+            - name: POSTGRESQL_HOST
+              value: external-postgresql.default.svc
+            - name: POSTGRESQL_PORT
+              value: "5432"
+            - name: POSTGRESQL_PASSWORD
+              value: root
+            - name: POSTGRESQL_USER
+              value: root
+          image: registry.github.com/pepeunlimited/go-twirp-starter-kit:0.1
+          name: go-twirp-starter-kit
+          ports:
+            - containerPort: 8080
+          resources: {}
+      restartPolicy: Always

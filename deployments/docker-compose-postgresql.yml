@@ -1,0 +1,17 @@
+# Docker Compose file Reference (https://docs.docker.com/compose/compose-file/)
+version: '3'
+services:
+  # PostgreSQL
+  postgresql:
+    # NOTE !
+    # with the command enabled all queries to be logged in a console
+    #command: ["postgres", "-c", "log_statement=all", "-c", "log_destination=stderr"]
+    image: "postgis/postgis:latest"
+    container_name: postgresql2
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_USER=root
+    volumes:
+      - ../init/postgresql/initdb.d:/docker-entrypoint-initdb.d/

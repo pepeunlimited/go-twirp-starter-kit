@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: external-postgresql
+spec:
+  ports:
+    - name: postgresql
+      protocol: TCP
+      port: 5432
+      targetPort: 5432
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: external-postgresql
+subsets:
+  - addresses:
+      # READ MORE:
+      # $ minikube ssh "route -n | grep ^0.0.0.0 | awk '{ print \$2 }'"
+      # ${LOCAL_HOST}:3306
+      # MYSQL_HOST=external-mysql 
+      - ip: 192.168.64.1
+    ports:
+      - name: postgresql
+        port: 5432
