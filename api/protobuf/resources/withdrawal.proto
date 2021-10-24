@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package pepeunlimited.twirpkit.resources;
+
+option go_package = "github.com/pepeunlimited/go-twirp-starter-kit/pkg/api/v1/resources";
+
+import "enums/withdrawal_status.proto";
+
+message Withdrawal {
+  string id                                            = 1;
+  pepeunlimited.twirpkit.enums.WithdrawalStatus status = 2;
+  int64 amount                                         = 3;
+  string workflow_id                                   = 4;
+  string run_id                                        = 5;
+}

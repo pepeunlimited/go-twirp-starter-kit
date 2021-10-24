@@ -17,13 +17,7 @@ import twirp "github.com/twitchtv/twirp"
 import ctxsetters "github.com/twitchtv/twirp/ctxsetters"
 
 import google_protobuf "google.golang.org/protobuf/types/known/emptypb"
-import pepeunlimited_twirpkit_resources "github.com/pepeunlimited/go-twirp-starter-kit/pkg/api/v1/resources"
-
-import bytes "bytes"
-import errors "errors"
-import io "io"
-import path "path"
-import url "net/url"
+import pepeunlimited_twirpkit_resources1 "github.com/pepeunlimited/go-twirp-starter-kit/pkg/api/v1/resources"
 
 // Version compatibility assertion.
 // If the constant is not defined in the package, that likely means
@@ -36,13 +30,13 @@ const _ = twirp.TwirpPackageMinVersion_8_1_0
 // =====================
 
 type TodoService interface {
-	CreateTodo(context.Context, *CreateTodoRequest) (*pepeunlimited_twirpkit_resources.Todo, error)
+	CreateTodo(context.Context, *CreateTodoRequest) (*pepeunlimited_twirpkit_resources1.Todo, error)
 
-	GetTodo(context.Context, *GetTodoRequest) (*pepeunlimited_twirpkit_resources.Todo, error)
+	GetTodo(context.Context, *GetTodoRequest) (*pepeunlimited_twirpkit_resources1.Todo, error)
 
 	ListTodo(context.Context, *ListTodoRequest) (*ListTodoResponse, error)
 
-	UpdateTodo(context.Context, *UpdateTodoRequest) (*pepeunlimited_twirpkit_resources.Todo, error)
+	UpdateTodo(context.Context, *UpdateTodoRequest) (*pepeunlimited_twirpkit_resources1.Todo, error)
 
 	DeleteTodo(context.Context, *DeleteTodoRequest) (*google_protobuf.Empty, error)
 }
@@ -97,13 +91,13 @@ func NewTodoServiceProtobufClient(baseURL string, client HTTPClient, opts ...twi
 	}
 }
 
-func (c *todoServiceProtobufClient) CreateTodo(ctx context.Context, in *CreateTodoRequest) (*pepeunlimited_twirpkit_resources.Todo, error) {
+func (c *todoServiceProtobufClient) CreateTodo(ctx context.Context, in *CreateTodoRequest) (*pepeunlimited_twirpkit_resources1.Todo, error) {
 	ctx = ctxsetters.WithPackageName(ctx, "pepeunlimited.twirpkit.services")
 	ctx = ctxsetters.WithServiceName(ctx, "TodoService")
 	ctx = ctxsetters.WithMethodName(ctx, "CreateTodo")
 	caller := c.callCreateTodo
 	if c.interceptor != nil {
-		caller = func(ctx context.Context, req *CreateTodoRequest) (*pepeunlimited_twirpkit_resources.Todo, error) {
+		caller = func(ctx context.Context, req *CreateTodoRequest) (*pepeunlimited_twirpkit_resources1.Todo, error) {
 			resp, err := c.interceptor(
 				func(ctx context.Context, req interface{}) (interface{}, error) {
 					typedReq, ok := req.(*CreateTodoRequest)
@@ -114,9 +108,9 @@ func (c *todoServiceProtobufClient) CreateTodo(ctx context.Context, in *CreateTo
 				},
 			)(ctx, req)
 			if resp != nil {
-				typedResp, ok := resp.(*pepeunlimited_twirpkit_resources.Todo)
+				typedResp, ok := resp.(*pepeunlimited_twirpkit_resources1.Todo)
 				if !ok {
-					return nil, twirp.InternalError("failed type assertion resp.(*pepeunlimited_twirpkit_resources.Todo) when calling interceptor")
+					return nil, twirp.InternalError("failed type assertion resp.(*pepeunlimited_twirpkit_resources1.Todo) when calling interceptor")
 				}
 				return typedResp, err
 			}
@@ -126,8 +120,8 @@ func (c *todoServiceProtobufClient) CreateTodo(ctx context.Context, in *CreateTo
 	return caller(ctx, in)
 }
 
-func (c *todoServiceProtobufClient) callCreateTodo(ctx context.Context, in *CreateTodoRequest) (*pepeunlimited_twirpkit_resources.Todo, error) {
-	out := new(pepeunlimited_twirpkit_resources.Todo)
+func (c *todoServiceProtobufClient) callCreateTodo(ctx context.Context, in *CreateTodoRequest) (*pepeunlimited_twirpkit_resources1.Todo, error) {
+	out := new(pepeunlimited_twirpkit_resources1.Todo)
 	ctx, err := doProtobufRequest(ctx, c.client, c.opts.Hooks, c.urls[0], in, out)
 	if err != nil {
 		twerr, ok := err.(twirp.Error)
@@ -143,13 +137,13 @@ func (c *todoServiceProtobufClient) callCreateTodo(ctx context.Context, in *Crea
 	return out, nil
 }
 
-func (c *todoServiceProtobufClient) GetTodo(ctx context.Context, in *GetTodoRequest) (*pepeunlimited_twirpkit_resources.Todo, error) {
+func (c *todoServiceProtobufClient) GetTodo(ctx context.Context, in *GetTodoRequest) (*pepeunlimited_twirpkit_resources1.Todo, error) {
 	ctx = ctxsetters.WithPackageName(ctx, "pepeunlimited.twirpkit.services")
 	ctx = ctxsetters.WithServiceName(ctx, "TodoService")
 	ctx = ctxsetters.WithMethodName(ctx, "GetTodo")
 	caller := c.callGetTodo
 	if c.interceptor != nil {
-		caller = func(ctx context.Context, req *GetTodoRequest) (*pepeunlimited_twirpkit_resources.Todo, error) {
+		caller = func(ctx context.Context, req *GetTodoRequest) (*pepeunlimited_twirpkit_resources1.Todo, error) {
 			resp, err := c.interceptor(
 				func(ctx context.Context, req interface{}) (interface{}, error) {
 					typedReq, ok := req.(*GetTodoRequest)
@@ -160,9 +154,9 @@ func (c *todoServiceProtobufClient) GetTodo(ctx context.Context, in *GetTodoRequ
 				},
 			)(ctx, req)
 			if resp != nil {
-				typedResp, ok := resp.(*pepeunlimited_twirpkit_resources.Todo)
+				typedResp, ok := resp.(*pepeunlimited_twirpkit_resources1.Todo)
 				if !ok {
-					return nil, twirp.InternalError("failed type assertion resp.(*pepeunlimited_twirpkit_resources.Todo) when calling interceptor")
+					return nil, twirp.InternalError("failed type assertion resp.(*pepeunlimited_twirpkit_resources1.Todo) when calling interceptor")
 				}
 				return typedResp, err
 			}
@@ -172,8 +166,8 @@ func (c *todoServiceProtobufClient) GetTodo(ctx context.Context, in *GetTodoRequ
 	return caller(ctx, in)
 }
 
-func (c *todoServiceProtobufClient) callGetTodo(ctx context.Context, in *GetTodoRequest) (*pepeunlimited_twirpkit_resources.Todo, error) {
-	out := new(pepeunlimited_twirpkit_resources.Todo)
+func (c *todoServiceProtobufClient) callGetTodo(ctx context.Context, in *GetTodoRequest) (*pepeunlimited_twirpkit_resources1.Todo, error) {
+	out := new(pepeunlimited_twirpkit_resources1.Todo)
 	ctx, err := doProtobufRequest(ctx, c.client, c.opts.Hooks, c.urls[1], in, out)
 	if err != nil {
 		twerr, ok := err.(twirp.Error)
@@ -235,13 +229,13 @@ func (c *todoServiceProtobufClient) callListTodo(ctx context.Context, in *ListTo
 	return out, nil
 }
 
-func (c *todoServiceProtobufClient) UpdateTodo(ctx context.Context, in *UpdateTodoRequest) (*pepeunlimited_twirpkit_resources.Todo, error) {
+func (c *todoServiceProtobufClient) UpdateTodo(ctx context.Context, in *UpdateTodoRequest) (*pepeunlimited_twirpkit_resources1.Todo, error) {
 	ctx = ctxsetters.WithPackageName(ctx, "pepeunlimited.twirpkit.services")
 	ctx = ctxsetters.WithServiceName(ctx, "TodoService")
 	ctx = ctxsetters.WithMethodName(ctx, "UpdateTodo")
 	caller := c.callUpdateTodo
 	if c.interceptor != nil {
-		caller = func(ctx context.Context, req *UpdateTodoRequest) (*pepeunlimited_twirpkit_resources.Todo, error) {
+		caller = func(ctx context.Context, req *UpdateTodoRequest) (*pepeunlimited_twirpkit_resources1.Todo, error) {
 			resp, err := c.interceptor(
 				func(ctx context.Context, req interface{}) (interface{}, error) {
 					typedReq, ok := req.(*UpdateTodoRequest)
@@ -252,9 +246,9 @@ func (c *todoServiceProtobufClient) UpdateTodo(ctx context.Context, in *UpdateTo
 				},
 			)(ctx, req)
 			if resp != nil {
-				typedResp, ok := resp.(*pepeunlimited_twirpkit_resources.Todo)
+				typedResp, ok := resp.(*pepeunlimited_twirpkit_resources1.Todo)
 				if !ok {
-					return nil, twirp.InternalError("failed type assertion resp.(*pepeunlimited_twirpkit_resources.Todo) when calling interceptor")
+					return nil, twirp.InternalError("failed type assertion resp.(*pepeunlimited_twirpkit_resources1.Todo) when calling interceptor")
 				}
 				return typedResp, err
 			}
@@ -264,8 +258,8 @@ func (c *todoServiceProtobufClient) UpdateTodo(ctx context.Context, in *UpdateTo
 	return caller(ctx, in)
 }
 
-func (c *todoServiceProtobufClient) callUpdateTodo(ctx context.Context, in *UpdateTodoRequest) (*pepeunlimited_twirpkit_resources.Todo, error) {
-	out := new(pepeunlimited_twirpkit_resources.Todo)
+func (c *todoServiceProtobufClient) callUpdateTodo(ctx context.Context, in *UpdateTodoRequest) (*pepeunlimited_twirpkit_resources1.Todo, error) {
+	out := new(pepeunlimited_twirpkit_resources1.Todo)
 	ctx, err := doProtobufRequest(ctx, c.client, c.opts.Hooks, c.urls[3], in, out)
 	if err != nil {
 		twerr, ok := err.(twirp.Error)
@@ -377,13 +371,13 @@ func NewTodoServiceJSONClient(baseURL string, client HTTPClient, opts ...twirp.C
 	}
 }
 
-func (c *todoServiceJSONClient) CreateTodo(ctx context.Context, in *CreateTodoRequest) (*pepeunlimited_twirpkit_resources.Todo, error) {
+func (c *todoServiceJSONClient) CreateTodo(ctx context.Context, in *CreateTodoRequest) (*pepeunlimited_twirpkit_resources1.Todo, error) {
 	ctx = ctxsetters.WithPackageName(ctx, "pepeunlimited.twirpkit.services")
 	ctx = ctxsetters.WithServiceName(ctx, "TodoService")
 	ctx = ctxsetters.WithMethodName(ctx, "CreateTodo")
 	caller := c.callCreateTodo
 	if c.interceptor != nil {
-		caller = func(ctx context.Context, req *CreateTodoRequest) (*pepeunlimited_twirpkit_resources.Todo, error) {
+		caller = func(ctx context.Context, req *CreateTodoRequest) (*pepeunlimited_twirpkit_resources1.Todo, error) {
 			resp, err := c.interceptor(
 				func(ctx context.Context, req interface{}) (interface{}, error) {
 					typedReq, ok := req.(*CreateTodoRequest)
@@ -394,9 +388,9 @@ func (c *todoServiceJSONClient) CreateTodo(ctx context.Context, in *CreateTodoRe
 				},
 			)(ctx, req)
 			if resp != nil {
-				typedResp, ok := resp.(*pepeunlimited_twirpkit_resources.Todo)
+				typedResp, ok := resp.(*pepeunlimited_twirpkit_resources1.Todo)
 				if !ok {
-					return nil, twirp.InternalError("failed type assertion resp.(*pepeunlimited_twirpkit_resources.Todo) when calling interceptor")
+					return nil, twirp.InternalError("failed type assertion resp.(*pepeunlimited_twirpkit_resources1.Todo) when calling interceptor")
 				}
 				return typedResp, err
 			}
@@ -406,8 +400,8 @@ func (c *todoServiceJSONClient) CreateTodo(ctx context.Context, in *CreateTodoRe
 	return caller(ctx, in)
 }
 
-func (c *todoServiceJSONClient) callCreateTodo(ctx context.Context, in *CreateTodoRequest) (*pepeunlimited_twirpkit_resources.Todo, error) {
-	out := new(pepeunlimited_twirpkit_resources.Todo)
+func (c *todoServiceJSONClient) callCreateTodo(ctx context.Context, in *CreateTodoRequest) (*pepeunlimited_twirpkit_resources1.Todo, error) {
+	out := new(pepeunlimited_twirpkit_resources1.Todo)
 	ctx, err := doJSONRequest(ctx, c.client, c.opts.Hooks, c.urls[0], in, out)
 	if err != nil {
 		twerr, ok := err.(twirp.Error)
@@ -423,13 +417,13 @@ func (c *todoServiceJSONClient) callCreateTodo(ctx context.Context, in *CreateTo
 	return out, nil
 }
 
-func (c *todoServiceJSONClient) GetTodo(ctx context.Context, in *GetTodoRequest) (*pepeunlimited_twirpkit_resources.Todo, error) {
+func (c *todoServiceJSONClient) GetTodo(ctx context.Context, in *GetTodoRequest) (*pepeunlimited_twirpkit_resources1.Todo, error) {
 	ctx = ctxsetters.WithPackageName(ctx, "pepeunlimited.twirpkit.services")
 	ctx = ctxsetters.WithServiceName(ctx, "TodoService")
 	ctx = ctxsetters.WithMethodName(ctx, "GetTodo")
 	caller := c.callGetTodo
 	if c.interceptor != nil {
-		caller = func(ctx context.Context, req *GetTodoRequest) (*pepeunlimited_twirpkit_resources.Todo, error) {
+		caller = func(ctx context.Context, req *GetTodoRequest) (*pepeunlimited_twirpkit_resources1.Todo, error) {
 			resp, err := c.interceptor(
 				func(ctx context.Context, req interface{}) (interface{}, error) {
 					typedReq, ok := req.(*GetTodoRequest)
@@ -440,9 +434,9 @@ func (c *todoServiceJSONClient) GetTodo(ctx context.Context, in *GetTodoRequest)
 				},
 			)(ctx, req)
 			if resp != nil {
-				typedResp, ok := resp.(*pepeunlimited_twirpkit_resources.Todo)
+				typedResp, ok := resp.(*pepeunlimited_twirpkit_resources1.Todo)
 				if !ok {
-					return nil, twirp.InternalError("failed type assertion resp.(*pepeunlimited_twirpkit_resources.Todo) when calling interceptor")
+					return nil, twirp.InternalError("failed type assertion resp.(*pepeunlimited_twirpkit_resources1.Todo) when calling interceptor")
 				}
 				return typedResp, err
 			}
@@ -452,8 +446,8 @@ func (c *todoServiceJSONClient) GetTodo(ctx context.Context, in *GetTodoRequest)
 	return caller(ctx, in)
 }
 
-func (c *todoServiceJSONClient) callGetTodo(ctx context.Context, in *GetTodoRequest) (*pepeunlimited_twirpkit_resources.Todo, error) {
-	out := new(pepeunlimited_twirpkit_resources.Todo)
+func (c *todoServiceJSONClient) callGetTodo(ctx context.Context, in *GetTodoRequest) (*pepeunlimited_twirpkit_resources1.Todo, error) {
+	out := new(pepeunlimited_twirpkit_resources1.Todo)
 	ctx, err := doJSONRequest(ctx, c.client, c.opts.Hooks, c.urls[1], in, out)
 	if err != nil {
 		twerr, ok := err.(twirp.Error)
@@ -515,13 +509,13 @@ func (c *todoServiceJSONClient) callListTodo(ctx context.Context, in *ListTodoRe
 	return out, nil
 }
 
-func (c *todoServiceJSONClient) UpdateTodo(ctx context.Context, in *UpdateTodoRequest) (*pepeunlimited_twirpkit_resources.Todo, error) {
+func (c *todoServiceJSONClient) UpdateTodo(ctx context.Context, in *UpdateTodoRequest) (*pepeunlimited_twirpkit_resources1.Todo, error) {
 	ctx = ctxsetters.WithPackageName(ctx, "pepeunlimited.twirpkit.services")
 	ctx = ctxsetters.WithServiceName(ctx, "TodoService")
 	ctx = ctxsetters.WithMethodName(ctx, "UpdateTodo")
 	caller := c.callUpdateTodo
 	if c.interceptor != nil {
-		caller = func(ctx context.Context, req *UpdateTodoRequest) (*pepeunlimited_twirpkit_resources.Todo, error) {
+		caller = func(ctx context.Context, req *UpdateTodoRequest) (*pepeunlimited_twirpkit_resources1.Todo, error) {
 			resp, err := c.interceptor(
 				func(ctx context.Context, req interface{}) (interface{}, error) {
 					typedReq, ok := req.(*UpdateTodoRequest)
@@ -532,9 +526,9 @@ func (c *todoServiceJSONClient) UpdateTodo(ctx context.Context, in *UpdateTodoRe
 				},
 			)(ctx, req)
 			if resp != nil {
-				typedResp, ok := resp.(*pepeunlimited_twirpkit_resources.Todo)
+				typedResp, ok := resp.(*pepeunlimited_twirpkit_resources1.Todo)
 				if !ok {
-					return nil, twirp.InternalError("failed type assertion resp.(*pepeunlimited_twirpkit_resources.Todo) when calling interceptor")
+					return nil, twirp.InternalError("failed type assertion resp.(*pepeunlimited_twirpkit_resources1.Todo) when calling interceptor")
 				}
 				return typedResp, err
 			}
@@ -544,8 +538,8 @@ func (c *todoServiceJSONClient) UpdateTodo(ctx context.Context, in *UpdateTodoRe
 	return caller(ctx, in)
 }
 
-func (c *todoServiceJSONClient) callUpdateTodo(ctx context.Context, in *UpdateTodoRequest) (*pepeunlimited_twirpkit_resources.Todo, error) {
-	out := new(pepeunlimited_twirpkit_resources.Todo)
+func (c *todoServiceJSONClient) callUpdateTodo(ctx context.Context, in *UpdateTodoRequest) (*pepeunlimited_twirpkit_resources1.Todo, error) {
+	out := new(pepeunlimited_twirpkit_resources1.Todo)
 	ctx, err := doJSONRequest(ctx, c.client, c.opts.Hooks, c.urls[3], in, out)
 	if err != nil {
 		twerr, ok := err.(twirp.Error)
@@ -768,7 +762,7 @@ func (s *todoServiceServer) serveCreateTodoJSON(ctx context.Context, resp http.R
 
 	handler := s.TodoService.CreateTodo
 	if s.interceptor != nil {
-		handler = func(ctx context.Context, req *CreateTodoRequest) (*pepeunlimited_twirpkit_resources.Todo, error) {
+		handler = func(ctx context.Context, req *CreateTodoRequest) (*pepeunlimited_twirpkit_resources1.Todo, error) {
 			resp, err := s.interceptor(
 				func(ctx context.Context, req interface{}) (interface{}, error) {
 					typedReq, ok := req.(*CreateTodoRequest)
@@ -779,9 +773,9 @@ func (s *todoServiceServer) serveCreateTodoJSON(ctx context.Context, resp http.R
 				},
 			)(ctx, req)
 			if resp != nil {
-				typedResp, ok := resp.(*pepeunlimited_twirpkit_resources.Todo)
+				typedResp, ok := resp.(*pepeunlimited_twirpkit_resources1.Todo)
 				if !ok {
-					return nil, twirp.InternalError("failed type assertion resp.(*pepeunlimited_twirpkit_resources.Todo) when calling interceptor")
+					return nil, twirp.InternalError("failed type assertion resp.(*pepeunlimited_twirpkit_resources1.Todo) when calling interceptor")
 				}
 				return typedResp, err
 			}
@@ -790,7 +784,7 @@ func (s *todoServiceServer) serveCreateTodoJSON(ctx context.Context, resp http.R
 	}
 
 	// Call service method
-	var respContent *pepeunlimited_twirpkit_resources.Todo
+	var respContent *pepeunlimited_twirpkit_resources1.Todo
 	func() {
 		defer ensurePanicResponses(ctx, resp, s.hooks)
 		respContent, err = handler(ctx, reqContent)
@@ -801,7 +795,7 @@ func (s *todoServiceServer) serveCreateTodoJSON(ctx context.Context, resp http.R
 		return
 	}
 	if respContent == nil {
-		s.writeError(ctx, resp, twirp.InternalError("received a nil *pepeunlimited_twirpkit_resources.Todo and nil error while calling CreateTodo. nil responses are not supported"))
+		s.writeError(ctx, resp, twirp.InternalError("received a nil *pepeunlimited_twirpkit_resources1.Todo and nil error while calling CreateTodo. nil responses are not supported"))
 		return
 	}
 
@@ -849,7 +843,7 @@ func (s *todoServiceServer) serveCreateTodoProtobuf(ctx context.Context, resp ht
 
 	handler := s.TodoService.CreateTodo
 	if s.interceptor != nil {
-		handler = func(ctx context.Context, req *CreateTodoRequest) (*pepeunlimited_twirpkit_resources.Todo, error) {
+		handler = func(ctx context.Context, req *CreateTodoRequest) (*pepeunlimited_twirpkit_resources1.Todo, error) {
 			resp, err := s.interceptor(
 				func(ctx context.Context, req interface{}) (interface{}, error) {
 					typedReq, ok := req.(*CreateTodoRequest)
@@ -860,9 +854,9 @@ func (s *todoServiceServer) serveCreateTodoProtobuf(ctx context.Context, resp ht
 				},
 			)(ctx, req)
 			if resp != nil {
-				typedResp, ok := resp.(*pepeunlimited_twirpkit_resources.Todo)
+				typedResp, ok := resp.(*pepeunlimited_twirpkit_resources1.Todo)
 				if !ok {
-					return nil, twirp.InternalError("failed type assertion resp.(*pepeunlimited_twirpkit_resources.Todo) when calling interceptor")
+					return nil, twirp.InternalError("failed type assertion resp.(*pepeunlimited_twirpkit_resources1.Todo) when calling interceptor")
 				}
 				return typedResp, err
 			}
@@ -871,7 +865,7 @@ func (s *todoServiceServer) serveCreateTodoProtobuf(ctx context.Context, resp ht
 	}
 
 	// Call service method
-	var respContent *pepeunlimited_twirpkit_resources.Todo
+	var respContent *pepeunlimited_twirpkit_resources1.Todo
 	func() {
 		defer ensurePanicResponses(ctx, resp, s.hooks)
 		respContent, err = handler(ctx, reqContent)
@@ -882,7 +876,7 @@ func (s *todoServiceServer) serveCreateTodoProtobuf(ctx context.Context, resp ht
 		return
 	}
 	if respContent == nil {
-		s.writeError(ctx, resp, twirp.InternalError("received a nil *pepeunlimited_twirpkit_resources.Todo and nil error while calling CreateTodo. nil responses are not supported"))
+		s.writeError(ctx, resp, twirp.InternalError("received a nil *pepeunlimited_twirpkit_resources1.Todo and nil error while calling CreateTodo. nil responses are not supported"))
 		return
 	}
 
@@ -948,7 +942,7 @@ func (s *todoServiceServer) serveGetTodoJSON(ctx context.Context, resp http.Resp
 
 	handler := s.TodoService.GetTodo
 	if s.interceptor != nil {
-		handler = func(ctx context.Context, req *GetTodoRequest) (*pepeunlimited_twirpkit_resources.Todo, error) {
+		handler = func(ctx context.Context, req *GetTodoRequest) (*pepeunlimited_twirpkit_resources1.Todo, error) {
 			resp, err := s.interceptor(
 				func(ctx context.Context, req interface{}) (interface{}, error) {
 					typedReq, ok := req.(*GetTodoRequest)
@@ -959,9 +953,9 @@ func (s *todoServiceServer) serveGetTodoJSON(ctx context.Context, resp http.Resp
 				},
 			)(ctx, req)
 			if resp != nil {
-				typedResp, ok := resp.(*pepeunlimited_twirpkit_resources.Todo)
+				typedResp, ok := resp.(*pepeunlimited_twirpkit_resources1.Todo)
 				if !ok {
-					return nil, twirp.InternalError("failed type assertion resp.(*pepeunlimited_twirpkit_resources.Todo) when calling interceptor")
+					return nil, twirp.InternalError("failed type assertion resp.(*pepeunlimited_twirpkit_resources1.Todo) when calling interceptor")
 				}
 				return typedResp, err
 			}
@@ -970,7 +964,7 @@ func (s *todoServiceServer) serveGetTodoJSON(ctx context.Context, resp http.Resp
 	}
 
 	// Call service method
-	var respContent *pepeunlimited_twirpkit_resources.Todo
+	var respContent *pepeunlimited_twirpkit_resources1.Todo
 	func() {
 		defer ensurePanicResponses(ctx, resp, s.hooks)
 		respContent, err = handler(ctx, reqContent)
@@ -981,7 +975,7 @@ func (s *todoServiceServer) serveGetTodoJSON(ctx context.Context, resp http.Resp
 		return
 	}
 	if respContent == nil {
-		s.writeError(ctx, resp, twirp.InternalError("received a nil *pepeunlimited_twirpkit_resources.Todo and nil error while calling GetTodo. nil responses are not supported"))
+		s.writeError(ctx, resp, twirp.InternalError("received a nil *pepeunlimited_twirpkit_resources1.Todo and nil error while calling GetTodo. nil responses are not supported"))
 		return
 	}
 
@@ -1029,7 +1023,7 @@ func (s *todoServiceServer) serveGetTodoProtobuf(ctx context.Context, resp http.
 
 	handler := s.TodoService.GetTodo
 	if s.interceptor != nil {
-		handler = func(ctx context.Context, req *GetTodoRequest) (*pepeunlimited_twirpkit_resources.Todo, error) {
+		handler = func(ctx context.Context, req *GetTodoRequest) (*pepeunlimited_twirpkit_resources1.Todo, error) {
 			resp, err := s.interceptor(
 				func(ctx context.Context, req interface{}) (interface{}, error) {
 					typedReq, ok := req.(*GetTodoRequest)
@@ -1040,9 +1034,9 @@ func (s *todoServiceServer) serveGetTodoProtobuf(ctx context.Context, resp http.
 				},
 			)(ctx, req)
 			if resp != nil {
-				typedResp, ok := resp.(*pepeunlimited_twirpkit_resources.Todo)
+				typedResp, ok := resp.(*pepeunlimited_twirpkit_resources1.Todo)
 				if !ok {
-					return nil, twirp.InternalError("failed type assertion resp.(*pepeunlimited_twirpkit_resources.Todo) when calling interceptor")
+					return nil, twirp.InternalError("failed type assertion resp.(*pepeunlimited_twirpkit_resources1.Todo) when calling interceptor")
 				}
 				return typedResp, err
 			}
@@ -1051,7 +1045,7 @@ func (s *todoServiceServer) serveGetTodoProtobuf(ctx context.Context, resp http.
 	}
 
 	// Call service method
-	var respContent *pepeunlimited_twirpkit_resources.Todo
+	var respContent *pepeunlimited_twirpkit_resources1.Todo
 	func() {
 		defer ensurePanicResponses(ctx, resp, s.hooks)
 		respContent, err = handler(ctx, reqContent)
@@ -1062,7 +1056,7 @@ func (s *todoServiceServer) serveGetTodoProtobuf(ctx context.Context, resp http.
 		return
 	}
 	if respContent == nil {
-		s.writeError(ctx, resp, twirp.InternalError("received a nil *pepeunlimited_twirpkit_resources.Todo and nil error while calling GetTodo. nil responses are not supported"))
+		s.writeError(ctx, resp, twirp.InternalError("received a nil *pepeunlimited_twirpkit_resources1.Todo and nil error while calling GetTodo. nil responses are not supported"))
 		return
 	}
 
@@ -1308,7 +1302,7 @@ func (s *todoServiceServer) serveUpdateTodoJSON(ctx context.Context, resp http.R
 
 	handler := s.TodoService.UpdateTodo
 	if s.interceptor != nil {
-		handler = func(ctx context.Context, req *UpdateTodoRequest) (*pepeunlimited_twirpkit_resources.Todo, error) {
+		handler = func(ctx context.Context, req *UpdateTodoRequest) (*pepeunlimited_twirpkit_resources1.Todo, error) {
 			resp, err := s.interceptor(
 				func(ctx context.Context, req interface{}) (interface{}, error) {
 					typedReq, ok := req.(*UpdateTodoRequest)
@@ -1319,9 +1313,9 @@ func (s *todoServiceServer) serveUpdateTodoJSON(ctx context.Context, resp http.R
 				},
 			)(ctx, req)
 			if resp != nil {
-				typedResp, ok := resp.(*pepeunlimited_twirpkit_resources.Todo)
+				typedResp, ok := resp.(*pepeunlimited_twirpkit_resources1.Todo)
 				if !ok {
-					return nil, twirp.InternalError("failed type assertion resp.(*pepeunlimited_twirpkit_resources.Todo) when calling interceptor")
+					return nil, twirp.InternalError("failed type assertion resp.(*pepeunlimited_twirpkit_resources1.Todo) when calling interceptor")
 				}
 				return typedResp, err
 			}
@@ -1330,7 +1324,7 @@ func (s *todoServiceServer) serveUpdateTodoJSON(ctx context.Context, resp http.R
 	}
 
 	// Call service method
-	var respContent *pepeunlimited_twirpkit_resources.Todo
+	var respContent *pepeunlimited_twirpkit_resources1.Todo
 	func() {
 		defer ensurePanicResponses(ctx, resp, s.hooks)
 		respContent, err = handler(ctx, reqContent)
@@ -1341,7 +1335,7 @@ func (s *todoServiceServer) serveUpdateTodoJSON(ctx context.Context, resp http.R
 		return
 	}
 	if respContent == nil {
-		s.writeError(ctx, resp, twirp.InternalError("received a nil *pepeunlimited_twirpkit_resources.Todo and nil error while calling UpdateTodo. nil responses are not supported"))
+		s.writeError(ctx, resp, twirp.InternalError("received a nil *pepeunlimited_twirpkit_resources1.Todo and nil error while calling UpdateTodo. nil responses are not supported"))
 		return
 	}
 
@@ -1389,7 +1383,7 @@ func (s *todoServiceServer) serveUpdateTodoProtobuf(ctx context.Context, resp ht
 
 	handler := s.TodoService.UpdateTodo
 	if s.interceptor != nil {
-		handler = func(ctx context.Context, req *UpdateTodoRequest) (*pepeunlimited_twirpkit_resources.Todo, error) {
+		handler = func(ctx context.Context, req *UpdateTodoRequest) (*pepeunlimited_twirpkit_resources1.Todo, error) {
 			resp, err := s.interceptor(
 				func(ctx context.Context, req interface{}) (interface{}, error) {
 					typedReq, ok := req.(*UpdateTodoRequest)
@@ -1400,9 +1394,9 @@ func (s *todoServiceServer) serveUpdateTodoProtobuf(ctx context.Context, resp ht
 				},
 			)(ctx, req)
 			if resp != nil {
-				typedResp, ok := resp.(*pepeunlimited_twirpkit_resources.Todo)
+				typedResp, ok := resp.(*pepeunlimited_twirpkit_resources1.Todo)
 				if !ok {
-					return nil, twirp.InternalError("failed type assertion resp.(*pepeunlimited_twirpkit_resources.Todo) when calling interceptor")
+					return nil, twirp.InternalError("failed type assertion resp.(*pepeunlimited_twirpkit_resources1.Todo) when calling interceptor")
 				}
 				return typedResp, err
 			}
@@ -1411,7 +1405,7 @@ func (s *todoServiceServer) serveUpdateTodoProtobuf(ctx context.Context, resp ht
 	}
 
 	// Call service method
-	var respContent *pepeunlimited_twirpkit_resources.Todo
+	var respContent *pepeunlimited_twirpkit_resources1.Todo
 	func() {
 		defer ensurePanicResponses(ctx, resp, s.hooks)
 		respContent, err = handler(ctx, reqContent)
@@ -1422,7 +1416,7 @@ func (s *todoServiceServer) serveUpdateTodoProtobuf(ctx context.Context, resp ht
 		return
 	}
 	if respContent == nil {
-		s.writeError(ctx, resp, twirp.InternalError("received a nil *pepeunlimited_twirpkit_resources.Todo and nil error while calling UpdateTodo. nil responses are not supported"))
+		s.writeError(ctx, resp, twirp.InternalError("received a nil *pepeunlimited_twirpkit_resources1.Todo and nil error while calling UpdateTodo. nil responses are not supported"))
 		return
 	}
 
@@ -1627,7 +1621,7 @@ func (s *todoServiceServer) serveDeleteTodoProtobuf(ctx context.Context, resp ht
 }
 
 func (s *todoServiceServer) ServiceDescriptor() ([]byte, int) {
-	return twirpFileDescriptor0, 0
+	return twirpFileDescriptor1, 0
 }
 
 func (s *todoServiceServer) ProtocGenTwirpVersion() string {
@@ -1641,575 +1635,7 @@ func (s *todoServiceServer) PathPrefix() string {
 	return baseServicePath(s.pathPrefix, "pepeunlimited.twirpkit.services", "TodoService")
 }
 
-// =====
-// Utils
-// =====
-
-// HTTPClient is the interface used by generated clients to send HTTP requests.
-// It is fulfilled by *(net/http).Client, which is sufficient for most users.
-// Users can provide their own implementation for special retry policies.
-//
-// HTTPClient implementations should not follow redirects. Redirects are
-// automatically disabled if *(net/http).Client is passed to client
-// constructors. See the withoutRedirects function in this file for more
-// details.
-type HTTPClient interface {
-	Do(req *http.Request) (*http.Response, error)
-}
-
-// TwirpServer is the interface generated server structs will support: they're
-// HTTP handlers with additional methods for accessing metadata about the
-// service. Those accessors are a low-level API for building reflection tools.
-// Most people can think of TwirpServers as just http.Handlers.
-type TwirpServer interface {
-	http.Handler
-
-	// ServiceDescriptor returns gzipped bytes describing the .proto file that
-	// this service was generated from. Once unzipped, the bytes can be
-	// unmarshalled as a
-	// google.golang.org/protobuf/types/descriptorpb.FileDescriptorProto.
-	//
-	// The returned integer is the index of this particular service within that
-	// FileDescriptorProto's 'Service' slice of ServiceDescriptorProtos. This is a
-	// low-level field, expected to be used for reflection.
-	ServiceDescriptor() ([]byte, int)
-
-	// ProtocGenTwirpVersion is the semantic version string of the version of
-	// twirp used to generate this file.
-	ProtocGenTwirpVersion() string
-
-	// PathPrefix returns the HTTP URL path prefix for all methods handled by this
-	// service. This can be used with an HTTP mux to route Twirp requests.
-	// The path prefix is in the form: "/<prefix>/<package>.<Service>/"
-	// that is, everything in a Twirp route except for the <Method> at the end.
-	PathPrefix() string
-}
-
-func newServerOpts(opts []interface{}) *twirp.ServerOptions {
-	serverOpts := &twirp.ServerOptions{}
-	for _, opt := range opts {
-		switch o := opt.(type) {
-		case twirp.ServerOption:
-			o(serverOpts)
-		case *twirp.ServerHooks: // backwards compatibility, allow to specify hooks as an argument
-			twirp.WithServerHooks(o)(serverOpts)
-		case nil: // backwards compatibility, allow nil value for the argument
-			continue
-		default:
-			panic(fmt.Sprintf("Invalid option type %T, please use a twirp.ServerOption", o))
-		}
-	}
-	return serverOpts
-}
-
-// WriteError writes an HTTP response with a valid Twirp error format (code, msg, meta).
-// Useful outside of the Twirp server (e.g. http middleware), but does not trigger hooks.
-// If err is not a twirp.Error, it will get wrapped with twirp.InternalErrorWith(err)
-func WriteError(resp http.ResponseWriter, err error) {
-	writeError(context.Background(), resp, err, nil)
-}
-
-// writeError writes Twirp errors in the response and triggers hooks.
-func writeError(ctx context.Context, resp http.ResponseWriter, err error, hooks *twirp.ServerHooks) {
-	// Convert to a twirp.Error. Non-twirp errors are converted to internal errors.
-	var twerr twirp.Error
-	if !errors.As(err, &twerr) {
-		twerr = twirp.InternalErrorWith(err)
-	}
-
-	statusCode := twirp.ServerHTTPStatusFromErrorCode(twerr.Code())
-	ctx = ctxsetters.WithStatusCode(ctx, statusCode)
-	ctx = callError(ctx, hooks, twerr)
-
-	respBody := marshalErrorToJSON(twerr)
-
-	resp.Header().Set("Content-Type", "application/json") // Error responses are always JSON
-	resp.Header().Set("Content-Length", strconv.Itoa(len(respBody)))
-	resp.WriteHeader(statusCode) // set HTTP status code and send response
-
-	_, writeErr := resp.Write(respBody)
-	if writeErr != nil {
-		// We have three options here. We could log the error, call the Error
-		// hook, or just silently ignore the error.
-		//
-		// Logging is unacceptable because we don't have a user-controlled
-		// logger; writing out to stderr without permission is too rude.
-		//
-		// Calling the Error hook would confuse users: it would mean the Error
-		// hook got called twice for one request, which is likely to lead to
-		// duplicated log messages and metrics, no matter how well we document
-		// the behavior.
-		//
-		// Silently ignoring the error is our least-bad option. It's highly
-		// likely that the connection is broken and the original 'err' says
-		// so anyway.
-		_ = writeErr
-	}
-
-	callResponseSent(ctx, hooks)
-}
-
-// sanitizeBaseURL parses the the baseURL, and adds the "http" scheme if needed.
-// If the URL is unparsable, the baseURL is returned unchaged.
-func sanitizeBaseURL(baseURL string) string {
-	u, err := url.Parse(baseURL)
-	if err != nil {
-		return baseURL // invalid URL will fail later when making requests
-	}
-	if u.Scheme == "" {
-		u.Scheme = "http"
-	}
-	return u.String()
-}
-
-// baseServicePath composes the path prefix for the service (without <Method>).
-// e.g.: baseServicePath("/twirp", "my.pkg", "MyService")
-//       returns => "/twirp/my.pkg.MyService/"
-// e.g.: baseServicePath("", "", "MyService")
-//       returns => "/MyService/"
-func baseServicePath(prefix, pkg, service string) string {
-	fullServiceName := service
-	if pkg != "" {
-		fullServiceName = pkg + "." + service
-	}
-	return path.Join("/", prefix, fullServiceName) + "/"
-}
-
-// parseTwirpPath extracts path components form a valid Twirp route.
-// Expected format: "[<prefix>]/<package>.<Service>/<Method>"
-// e.g.: prefix, pkgService, method := parseTwirpPath("/twirp/pkg.Svc/MakeHat")
-func parseTwirpPath(path string) (string, string, string) {
-	parts := strings.Split(path, "/")
-	if len(parts) < 2 {
-		return "", "", ""
-	}
-	method := parts[len(parts)-1]
-	pkgService := parts[len(parts)-2]
-	prefix := strings.Join(parts[0:len(parts)-2], "/")
-	return prefix, pkgService, method
-}
-
-// getCustomHTTPReqHeaders retrieves a copy of any headers that are set in
-// a context through the twirp.WithHTTPRequestHeaders function.
-// If there are no headers set, or if they have the wrong type, nil is returned.
-func getCustomHTTPReqHeaders(ctx context.Context) http.Header {
-	header, ok := twirp.HTTPRequestHeaders(ctx)
-	if !ok || header == nil {
-		return nil
-	}
-	copied := make(http.Header)
-	for k, vv := range header {
-		if vv == nil {
-			copied[k] = nil
-			continue
-		}
-		copied[k] = make([]string, len(vv))
-		copy(copied[k], vv)
-	}
-	return copied
-}
-
-// newRequest makes an http.Request from a client, adding common headers.
-func newRequest(ctx context.Context, url string, reqBody io.Reader, contentType string) (*http.Request, error) {
-	req, err := http.NewRequest("POST", url, reqBody)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if customHeader := getCustomHTTPReqHeaders(ctx); customHeader != nil {
-		req.Header = customHeader
-	}
-	req.Header.Set("Accept", contentType)
-	req.Header.Set("Content-Type", contentType)
-	req.Header.Set("Twirp-Version", "v8.1.0")
-	return req, nil
-}
-
-// JSON serialization for errors
-type twerrJSON struct {
-	Code string            `json:"code"`
-	Msg  string            `json:"msg"`
-	Meta map[string]string `json:"meta,omitempty"`
-}
-
-// marshalErrorToJSON returns JSON from a twirp.Error, that can be used as HTTP error response body.
-// If serialization fails, it will use a descriptive Internal error instead.
-func marshalErrorToJSON(twerr twirp.Error) []byte {
-	// make sure that msg is not too large
-	msg := twerr.Msg()
-	if len(msg) > 1e6 {
-		msg = msg[:1e6]
-	}
-
-	tj := twerrJSON{
-		Code: string(twerr.Code()),
-		Msg:  msg,
-		Meta: twerr.MetaMap(),
-	}
-
-	buf, err := json.Marshal(&tj)
-	if err != nil {
-		buf = []byte("{\"type\": \"" + twirp.Internal + "\", \"msg\": \"There was an error but it could not be serialized into JSON\"}") // fallback
-	}
-
-	return buf
-}
-
-// errorFromResponse builds a twirp.Error from a non-200 HTTP response.
-// If the response has a valid serialized Twirp error, then it's returned.
-// If not, the response status code is used to generate a similar twirp
-// error. See twirpErrorFromIntermediary for more info on intermediary errors.
-func errorFromResponse(resp *http.Response) twirp.Error {
-	statusCode := resp.StatusCode
-	statusText := http.StatusText(statusCode)
-
-	if isHTTPRedirect(statusCode) {
-		// Unexpected redirect: it must be an error from an intermediary.
-		// Twirp clients don't follow redirects automatically, Twirp only handles
-		// POST requests, redirects should only happen on GET and HEAD requests.
-		location := resp.Header.Get("Location")
-		msg := fmt.Sprintf("unexpected HTTP status code %d %q received, Location=%q", statusCode, statusText, location)
-		return twirpErrorFromIntermediary(statusCode, msg, location)
-	}
-
-	respBodyBytes, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		return wrapInternal(err, "failed to read server error response body")
-	}
-
-	var tj twerrJSON
-	dec := json.NewDecoder(bytes.NewReader(respBodyBytes))
-	dec.DisallowUnknownFields()
-	if err := dec.Decode(&tj); err != nil || tj.Code == "" {
-		// Invalid JSON response; it must be an error from an intermediary.
-		msg := fmt.Sprintf("Error from intermediary with HTTP status code %d %q", statusCode, statusText)
-		return twirpErrorFromIntermediary(statusCode, msg, string(respBodyBytes))
-	}
-
-	errorCode := twirp.ErrorCode(tj.Code)
-	if !twirp.IsValidErrorCode(errorCode) {
-		msg := "invalid type returned from server error response: " + tj.Code
-		return twirp.InternalError(msg).WithMeta("body", string(respBodyBytes))
-	}
-
-	twerr := twirp.NewError(errorCode, tj.Msg)
-	for k, v := range tj.Meta {
-		twerr = twerr.WithMeta(k, v)
-	}
-	return twerr
-}
-
-// twirpErrorFromIntermediary maps HTTP errors from non-twirp sources to twirp errors.
-// The mapping is similar to gRPC: https://github.com/grpc/grpc/blob/master/doc/http-grpc-status-mapping.md.
-// Returned twirp Errors have some additional metadata for inspection.
-func twirpErrorFromIntermediary(status int, msg string, bodyOrLocation string) twirp.Error {
-	var code twirp.ErrorCode
-	if isHTTPRedirect(status) { // 3xx
-		code = twirp.Internal
-	} else {
-		switch status {
-		case 400: // Bad Request
-			code = twirp.Internal
-		case 401: // Unauthorized
-			code = twirp.Unauthenticated
-		case 403: // Forbidden
-			code = twirp.PermissionDenied
-		case 404: // Not Found
-			code = twirp.BadRoute
-		case 429: // Too Many Requests
-			code = twirp.ResourceExhausted
-		case 502, 503, 504: // Bad Gateway, Service Unavailable, Gateway Timeout
-			code = twirp.Unavailable
-		default: // All other codes
-			code = twirp.Unknown
-		}
-	}
-
-	twerr := twirp.NewError(code, msg)
-	twerr = twerr.WithMeta("http_error_from_intermediary", "true") // to easily know if this error was from intermediary
-	twerr = twerr.WithMeta("status_code", strconv.Itoa(status))
-	if isHTTPRedirect(status) {
-		twerr = twerr.WithMeta("location", bodyOrLocation)
-	} else {
-		twerr = twerr.WithMeta("body", bodyOrLocation)
-	}
-	return twerr
-}
-
-func isHTTPRedirect(status int) bool {
-	return status >= 300 && status <= 399
-}
-
-// wrapInternal wraps an error with a prefix as an Internal error.
-// The original error cause is accessible by github.com/pkg/errors.Cause.
-func wrapInternal(err error, prefix string) twirp.Error {
-	return twirp.InternalErrorWith(&wrappedError{prefix: prefix, cause: err})
-}
-
-type wrappedError struct {
-	prefix string
-	cause  error
-}
-
-func (e *wrappedError) Error() string { return e.prefix + ": " + e.cause.Error() }
-func (e *wrappedError) Unwrap() error { return e.cause } // for go1.13 + errors.Is/As
-func (e *wrappedError) Cause() error  { return e.cause } // for github.com/pkg/errors
-
-// ensurePanicResponses makes sure that rpc methods causing a panic still result in a Twirp Internal
-// error response (status 500), and error hooks are properly called with the panic wrapped as an error.
-// The panic is re-raised so it can be handled normally with middleware.
-func ensurePanicResponses(ctx context.Context, resp http.ResponseWriter, hooks *twirp.ServerHooks) {
-	if r := recover(); r != nil {
-		// Wrap the panic as an error so it can be passed to error hooks.
-		// The original error is accessible from error hooks, but not visible in the response.
-		err := errFromPanic(r)
-		twerr := &internalWithCause{msg: "Internal service panic", cause: err}
-		// Actually write the error
-		writeError(ctx, resp, twerr, hooks)
-		// If possible, flush the error to the wire.
-		f, ok := resp.(http.Flusher)
-		if ok {
-			f.Flush()
-		}
-
-		panic(r)
-	}
-}
-
-// errFromPanic returns the typed error if the recovered panic is an error, otherwise formats as error.
-func errFromPanic(p interface{}) error {
-	if err, ok := p.(error); ok {
-		return err
-	}
-	return fmt.Errorf("panic: %v", p)
-}
-
-// internalWithCause is a Twirp Internal error wrapping an original error cause,
-// but the original error message is not exposed on Msg(). The original error
-// can be checked with go1.13+ errors.Is/As, and also by (github.com/pkg/errors).Unwrap
-type internalWithCause struct {
-	msg   string
-	cause error
-}
-
-func (e *internalWithCause) Unwrap() error                               { return e.cause } // for go1.13 + errors.Is/As
-func (e *internalWithCause) Cause() error                                { return e.cause } // for github.com/pkg/errors
-func (e *internalWithCause) Error() string                               { return e.msg + ": " + e.cause.Error() }
-func (e *internalWithCause) Code() twirp.ErrorCode                       { return twirp.Internal }
-func (e *internalWithCause) Msg() string                                 { return e.msg }
-func (e *internalWithCause) Meta(key string) string                      { return "" }
-func (e *internalWithCause) MetaMap() map[string]string                  { return nil }
-func (e *internalWithCause) WithMeta(key string, val string) twirp.Error { return e }
-
-// malformedRequestError is used when the twirp server cannot unmarshal a request
-func malformedRequestError(msg string) twirp.Error {
-	return twirp.NewError(twirp.Malformed, msg)
-}
-
-// badRouteError is used when the twirp server cannot route a request
-func badRouteError(msg string, method, url string) twirp.Error {
-	err := twirp.NewError(twirp.BadRoute, msg)
-	err = err.WithMeta("twirp_invalid_route", method+" "+url)
-	return err
-}
-
-// withoutRedirects makes sure that the POST request can not be redirected.
-// The standard library will, by default, redirect requests (including POSTs) if it gets a 302 or
-// 303 response, and also 301s in go1.8. It redirects by making a second request, changing the
-// method to GET and removing the body. This produces very confusing error messages, so instead we
-// set a redirect policy that always errors. This stops Go from executing the redirect.
-//
-// We have to be a little careful in case the user-provided http.Client has its own CheckRedirect
-// policy - if so, we'll run through that policy first.
-//
-// Because this requires modifying the http.Client, we make a new copy of the client and return it.
-func withoutRedirects(in *http.Client) *http.Client {
-	copy := *in
-	copy.CheckRedirect = func(req *http.Request, via []*http.Request) error {
-		if in.CheckRedirect != nil {
-			// Run the input's redirect if it exists, in case it has side effects, but ignore any error it
-			// returns, since we want to use ErrUseLastResponse.
-			err := in.CheckRedirect(req, via)
-			_ = err // Silly, but this makes sure generated code passes errcheck -blank, which some people use.
-		}
-		return http.ErrUseLastResponse
-	}
-	return &copy
-}
-
-// doProtobufRequest makes a Protobuf request to the remote Twirp service.
-func doProtobufRequest(ctx context.Context, client HTTPClient, hooks *twirp.ClientHooks, url string, in, out proto.Message) (_ context.Context, err error) {
-	reqBodyBytes, err := proto.Marshal(in)
-	if err != nil {
-		return ctx, wrapInternal(err, "failed to marshal proto request")
-	}
-	reqBody := bytes.NewBuffer(reqBodyBytes)
-	if err = ctx.Err(); err != nil {
-		return ctx, wrapInternal(err, "aborted because context was done")
-	}
-
-	req, err := newRequest(ctx, url, reqBody, "application/protobuf")
-	if err != nil {
-		return ctx, wrapInternal(err, "could not build request")
-	}
-	ctx, err = callClientRequestPrepared(ctx, hooks, req)
-	if err != nil {
-		return ctx, err
-	}
-
-	req = req.WithContext(ctx)
-	resp, err := client.Do(req)
-	if err != nil {
-		return ctx, wrapInternal(err, "failed to do request")
-	}
-
-	defer func() {
-		cerr := resp.Body.Close()
-		if err == nil && cerr != nil {
-			err = wrapInternal(cerr, "failed to close response body")
-		}
-	}()
-
-	if err = ctx.Err(); err != nil {
-		return ctx, wrapInternal(err, "aborted because context was done")
-	}
-
-	if resp.StatusCode != 200 {
-		return ctx, errorFromResponse(resp)
-	}
-
-	respBodyBytes, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		return ctx, wrapInternal(err, "failed to read response body")
-	}
-	if err = ctx.Err(); err != nil {
-		return ctx, wrapInternal(err, "aborted because context was done")
-	}
-
-	if err = proto.Unmarshal(respBodyBytes, out); err != nil {
-		return ctx, wrapInternal(err, "failed to unmarshal proto response")
-	}
-	return ctx, nil
-}
-
-// doJSONRequest makes a JSON request to the remote Twirp service.
-func doJSONRequest(ctx context.Context, client HTTPClient, hooks *twirp.ClientHooks, url string, in, out proto.Message) (_ context.Context, err error) {
-	marshaler := &protojson.MarshalOptions{UseProtoNames: true}
-	reqBytes, err := marshaler.Marshal(in)
-	if err != nil {
-		return ctx, wrapInternal(err, "failed to marshal json request")
-	}
-	if err = ctx.Err(); err != nil {
-		return ctx, wrapInternal(err, "aborted because context was done")
-	}
-
-	req, err := newRequest(ctx, url, bytes.NewReader(reqBytes), "application/json")
-	if err != nil {
-		return ctx, wrapInternal(err, "could not build request")
-	}
-	ctx, err = callClientRequestPrepared(ctx, hooks, req)
-	if err != nil {
-		return ctx, err
-	}
-
-	req = req.WithContext(ctx)
-	resp, err := client.Do(req)
-	if err != nil {
-		return ctx, wrapInternal(err, "failed to do request")
-	}
-
-	defer func() {
-		cerr := resp.Body.Close()
-		if err == nil && cerr != nil {
-			err = wrapInternal(cerr, "failed to close response body")
-		}
-	}()
-
-	if err = ctx.Err(); err != nil {
-		return ctx, wrapInternal(err, "aborted because context was done")
-	}
-
-	if resp.StatusCode != 200 {
-		return ctx, errorFromResponse(resp)
-	}
-
-	d := json.NewDecoder(resp.Body)
-	rawRespBody := json.RawMessage{}
-	if err := d.Decode(&rawRespBody); err != nil {
-		return ctx, wrapInternal(err, "failed to unmarshal json response")
-	}
-	unmarshaler := protojson.UnmarshalOptions{DiscardUnknown: true}
-	if err = unmarshaler.Unmarshal(rawRespBody, out); err != nil {
-		return ctx, wrapInternal(err, "failed to unmarshal json response")
-	}
-	if err = ctx.Err(); err != nil {
-		return ctx, wrapInternal(err, "aborted because context was done")
-	}
-	return ctx, nil
-}
-
-// Call twirp.ServerHooks.RequestReceived if the hook is available
-func callRequestReceived(ctx context.Context, h *twirp.ServerHooks) (context.Context, error) {
-	if h == nil || h.RequestReceived == nil {
-		return ctx, nil
-	}
-	return h.RequestReceived(ctx)
-}
-
-// Call twirp.ServerHooks.RequestRouted if the hook is available
-func callRequestRouted(ctx context.Context, h *twirp.ServerHooks) (context.Context, error) {
-	if h == nil || h.RequestRouted == nil {
-		return ctx, nil
-	}
-	return h.RequestRouted(ctx)
-}
-
-// Call twirp.ServerHooks.ResponsePrepared if the hook is available
-func callResponsePrepared(ctx context.Context, h *twirp.ServerHooks) context.Context {
-	if h == nil || h.ResponsePrepared == nil {
-		return ctx
-	}
-	return h.ResponsePrepared(ctx)
-}
-
-// Call twirp.ServerHooks.ResponseSent if the hook is available
-func callResponseSent(ctx context.Context, h *twirp.ServerHooks) {
-	if h == nil || h.ResponseSent == nil {
-		return
-	}
-	h.ResponseSent(ctx)
-}
-
-// Call twirp.ServerHooks.Error if the hook is available
-func callError(ctx context.Context, h *twirp.ServerHooks, err twirp.Error) context.Context {
-	if h == nil || h.Error == nil {
-		return ctx
-	}
-	return h.Error(ctx, err)
-}
-
-func callClientResponseReceived(ctx context.Context, h *twirp.ClientHooks) {
-	if h == nil || h.ResponseReceived == nil {
-		return
-	}
-	h.ResponseReceived(ctx)
-}
-
-func callClientRequestPrepared(ctx context.Context, h *twirp.ClientHooks, req *http.Request) (context.Context, error) {
-	if h == nil || h.RequestPrepared == nil {
-		return ctx, nil
-	}
-	return h.RequestPrepared(ctx, req)
-}
-
-func callClientError(ctx context.Context, h *twirp.ClientHooks, err twirp.Error) {
-	if h == nil || h.Error == nil {
-		return
-	}
-	h.Error(ctx, err)
-}
-
-var twirpFileDescriptor0 = []byte{
+var twirpFileDescriptor1 = []byte{
 	// 502 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xa4, 0x94, 0x51, 0x6f, 0xd3, 0x30,
 	0x10, 0xc7, 0x95, 0x96, 0x6e, 0xeb, 0x55, 0x6c, 0xd4, 0x9a, 0xa0, 0x4a, 0x85, 0xa8, 0xfa, 0x30,

@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package pepeunlimited.twirpkit.services;
+option go_package = "github.com/pepeunlimited/go-twirp-starter-kit/pkg/api/v1/services";
+
+import "resources/withdrawal.proto";
+
+// @see https://github.com/temporalio/documentation/tree/master/docs/go
+//  
+service TemporalService {
+
+    // Basic example of the Temporal key components: workflow, activity and worker
+    rpc CreateWithdraw(CreateWithdrawRequest) returns (pepeunlimited.twirpkit.resources.Withdrawal);
+
+    //rpc UpdateWithdraw()
+}
+
+message CreateWithdrawRequest {
+
+    int64 amount = 1;
+}

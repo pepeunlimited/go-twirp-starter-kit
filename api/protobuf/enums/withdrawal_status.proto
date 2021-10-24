@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package pepeunlimited.twirpkit.enums;
+
+option go_package = "github.com/pepeunlimited/go-twirp-starter-kit/pkg/api/v1/enums";
+
+enum WithdrawalStatus {
+  WITHDRAWAL_STATUS_UNSPECIFIED = 0;
+  WITHDRAWAL_STATUS_CREATED     = 1;
+  WITHDRAWAL_STATUS_COMPLETED   = 2;
+  WITHDRAWAL_STATUS_CANCELED    = 3;
+}
