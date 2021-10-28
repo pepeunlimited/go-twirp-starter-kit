@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package pepeunlimited.twirpkit.resources;
+
+option go_package = "github.com/pepeunlimited/go-twirp-starter-kit/pkg/api/v1/resources";
+
+import "enums/workflow_status.proto";
+
+message Workflow {
+  string workflow_id                                 = 1;
+  string workflow_run_id                             = 2;
+  pepeunlimited.twirpkit.enums.WorkflowStatus status = 3;
+  string namespace                                   = 4;
+}

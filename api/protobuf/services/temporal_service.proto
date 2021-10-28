@@ -4,18 +4,49 @@ package pepeunlimited.twirpkit.services;
 option go_package = "github.com/pepeunlimited/go-twirp-starter-kit/pkg/api/v1/services";
 
 import "resources/withdrawal.proto";
+import "google/protobuf/field_mask.proto";
 
 // @see https://github.com/temporalio/documentation/tree/master/docs/go
-//  
+// 
 service TemporalService {
 
     // Basic example of the Temporal key components: workflow, activity and worker
-    rpc CreateWithdraw(CreateWithdrawRequest) returns (pepeunlimited.twirpkit.resources.Withdrawal);
+    rpc CreateWithdraw(CreateWithdrawRequest)   returns (pepeunlimited.twirpkit.resources.Withdrawal);
 
-    //rpc UpdateWithdraw()
+    rpc GetWithdrawal(GetWithdrawalRequest)     returns (pepeunlimited.twirpkit.resources.Withdrawal);
+
+    rpc UpdateWithdrawal(UpdateWithdrawRequest) returns (pepeunlimited.twirpkit.resources.Withdrawal);
 }
 
 message CreateWithdrawRequest {
 
-    int64 amount = 1;
+    int64 amount  = 1;
+    int64 user_id = 2;
+}
+
+message GetWithdrawalRequest {
+
+    google.protobuf.FieldMask field_mask = 1; // optional
+
+    oneof paramenter { // required
+
+        QueryWithdrawal  query  = 2;
+        QueryWithdrawal2 query2 = 3;
+    }
+}
+
+message QueryWithdrawal {
+    string workflow_id     = 1; // required
+    string workflow_run_id = 2; // required
+    int64 user_id          = 3; // required
+}
+
+message QueryWithdrawal2 {
+    string id      = 1; // required
+    int64 user_id  = 2; // required
+}
+
+message UpdateWithdrawRequest {
+    pepeunlimited.twirpkit.resources.Withdrawal operation = 1; //required
+    google.protobuf.FieldMask field_mask                  = 2; // optional
 }

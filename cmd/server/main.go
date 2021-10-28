@@ -9,6 +9,8 @@ import (
 	"github.com/pepeunlimited/go-twirp-starter-kit/pkg/api/v1/services"
 	"github.com/pepeunlimited/go-twirp-starter-kit/pkg/env"
 	"github.com/pepeunlimited/go-twirp-starter-kit/pkg/middleware"
+
+	"go.temporal.io/sdk/client"
 )
 
 const (
@@ -23,11 +25,19 @@ func init() {
 
 func main() {
 	log.Printf("🚀 Started the GoTwirpStarterKit, version=[%s]", Version)
-	todoServerPort := env.IntEnv(PortEnv, Port)
+	temporalClient, err := client.NewClient(client.Options{})
+	if err != nil {
+		log.Panicf("❌ temporal.client.NewClient occurred issue: %v", err)
+	}
 	todoServer := services.NewTodoServiceServer(twirp.NewTodoServer(), nil)
+	temporalServer := services.NewTemporalServiceServer(twirp.NewTemporalServer(temporalClient), nil)
+
 	mux := http.NewServeMux()
 	mux.Handle(todoServer.PathPrefix(), middleware.Adapt(todoServer))
-	if err := http.ListenAndServe(fmt.Sprintf(":%d", todoServerPort), mux); err != nil {
-		log.Panic(err)
+	mux.Handle(temporalServer.PathPrefix(), middleware.Adapt(temporalServer))
+
+	goTwipStarterKitPort := env.IntEnv(PortEnv, Port)
+	if err := http.ListenAndServe(fmt.Sprintf(":%d", goTwipStarterKitPort), mux); err != nil {
+		log.Panicf("❌ http.ListenAndServe occurred issue: %v", err)
 	}
 }

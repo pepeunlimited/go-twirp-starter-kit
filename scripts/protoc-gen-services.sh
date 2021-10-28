@@ -16,7 +16,7 @@ PROTOC_CMD() {
         FILENAME_WITHOUT_PATH=$(basename $FILENAME)
         MUTATED+=("services/${FILENAME_WITHOUT_PATH}")
     done
-    echo "${MUTATED[@]}"
+    # echo "${MUTATED[@]}"
     sh $PROTOC_GEN_SH "${MUTATED[@]}"
 }
 

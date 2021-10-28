@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package pepeunlimited.twirpkit.enums;
+
+option go_package = "github.com/pepeunlimited/go-twirp-starter-kit/pkg/api/v1/enums";
+
+enum WorkflowStatus {
+  WORKFLOW_STATUS_UNSPECIFIED      = 0;
+  WORKFLOW_STATUS_RUNNING          = 1;
+  WORKFLOW_STATUS_COMPLETED        = 2;
+  WORKFLOW_STATUS_FAILED           = 3;
+  WORKFLOW_STATUS_CANCELED         = 4;
+  WORKFLOW_STATUS_TERMINATED       = 5;
+  WORKFLOW_STATUS_CONTINUED_AS_NEW = 6;
+  WORKFLOW_STATUS_TIMED_OUT        = 7;
+}

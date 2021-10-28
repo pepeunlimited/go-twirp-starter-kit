@@ -16,7 +16,7 @@ import proto "google.golang.org/protobuf/proto"
 import twirp "github.com/twitchtv/twirp"
 import ctxsetters "github.com/twitchtv/twirp/ctxsetters"
 
-import pepeunlimited_twirpkit_resources "github.com/pepeunlimited/go-twirp-starter-kit/pkg/api/v1/resources"
+import pepeunlimited_twirpkit_resources1 "github.com/pepeunlimited/go-twirp-starter-kit/pkg/api/v1/resources"
 
 import bytes "bytes"
 import errors "errors"
@@ -38,7 +38,11 @@ const _ = twirp.TwirpPackageMinVersion_8_1_0
 //
 type TemporalService interface {
 	// Basic example of the Temporal key components: workflow, activity and worker
-	CreateWithdraw(context.Context, *CreateWithdrawRequest) (*pepeunlimited_twirpkit_resources.Withdrawal, error)
+	CreateWithdraw(context.Context, *CreateWithdrawRequest) (*pepeunlimited_twirpkit_resources1.Withdrawal, error)
+
+	GetWithdrawal(context.Context, *GetWithdrawalRequest) (*pepeunlimited_twirpkit_resources1.Withdrawal, error)
+
+	UpdateWithdrawal(context.Context, *UpdateWithdrawRequest) (*pepeunlimited_twirpkit_resources1.Withdrawal, error)
 }
 
 // ===============================
@@ -47,7 +51,7 @@ type TemporalService interface {
 
 type temporalServiceProtobufClient struct {
 	client      HTTPClient
-	urls        [1]string
+	urls        [3]string
 	interceptor twirp.Interceptor
 	opts        twirp.ClientOptions
 }
@@ -75,8 +79,10 @@ func NewTemporalServiceProtobufClient(baseURL string, client HTTPClient, opts ..
 	// Build method URLs: <baseURL>[<prefix>]/<package>.<Service>/<Method>
 	serviceURL := sanitizeBaseURL(baseURL)
 	serviceURL += baseServicePath(pathPrefix, "pepeunlimited.twirpkit.services", "TemporalService")
-	urls := [1]string{
+	urls := [3]string{
 		serviceURL + "CreateWithdraw",
+		serviceURL + "GetWithdrawal",
+		serviceURL + "UpdateWithdrawal",
 	}
 
 	return &temporalServiceProtobufClient{
@@ -87,13 +93,13 @@ func NewTemporalServiceProtobufClient(baseURL string, client HTTPClient, opts ..
 	}
 }
 
-func (c *temporalServiceProtobufClient) CreateWithdraw(ctx context.Context, in *CreateWithdrawRequest) (*pepeunlimited_twirpkit_resources.Withdrawal, error) {
+func (c *temporalServiceProtobufClient) CreateWithdraw(ctx context.Context, in *CreateWithdrawRequest) (*pepeunlimited_twirpkit_resources1.Withdrawal, error) {
 	ctx = ctxsetters.WithPackageName(ctx, "pepeunlimited.twirpkit.services")
 	ctx = ctxsetters.WithServiceName(ctx, "TemporalService")
 	ctx = ctxsetters.WithMethodName(ctx, "CreateWithdraw")
 	caller := c.callCreateWithdraw
 	if c.interceptor != nil {
-		caller = func(ctx context.Context, req *CreateWithdrawRequest) (*pepeunlimited_twirpkit_resources.Withdrawal, error) {
+		caller = func(ctx context.Context, req *CreateWithdrawRequest) (*pepeunlimited_twirpkit_resources1.Withdrawal, error) {
 			resp, err := c.interceptor(
 				func(ctx context.Context, req interface{}) (interface{}, error) {
 					typedReq, ok := req.(*CreateWithdrawRequest)
@@ -104,9 +110,9 @@ func (c *temporalServiceProtobufClient) CreateWithdraw(ctx context.Context, in *
 				},
 			)(ctx, req)
 			if resp != nil {
-				typedResp, ok := resp.(*pepeunlimited_twirpkit_resources.Withdrawal)
+				typedResp, ok := resp.(*pepeunlimited_twirpkit_resources1.Withdrawal)
 				if !ok {
-					return nil, twirp.InternalError("failed type assertion resp.(*pepeunlimited_twirpkit_resources.Withdrawal) when calling interceptor")
+					return nil, twirp.InternalError("failed type assertion resp.(*pepeunlimited_twirpkit_resources1.Withdrawal) when calling interceptor")
 				}
 				return typedResp, err
 			}
@@ -116,9 +122,101 @@ func (c *temporalServiceProtobufClient) CreateWithdraw(ctx context.Context, in *
 	return caller(ctx, in)
 }
 
-func (c *temporalServiceProtobufClient) callCreateWithdraw(ctx context.Context, in *CreateWithdrawRequest) (*pepeunlimited_twirpkit_resources.Withdrawal, error) {
-	out := new(pepeunlimited_twirpkit_resources.Withdrawal)
+func (c *temporalServiceProtobufClient) callCreateWithdraw(ctx context.Context, in *CreateWithdrawRequest) (*pepeunlimited_twirpkit_resources1.Withdrawal, error) {
+	out := new(pepeunlimited_twirpkit_resources1.Withdrawal)
 	ctx, err := doProtobufRequest(ctx, c.client, c.opts.Hooks, c.urls[0], in, out)
+	if err != nil {
+		twerr, ok := err.(twirp.Error)
+		if !ok {
+			twerr = twirp.InternalErrorWith(err)
+		}
+		callClientError(ctx, c.opts.Hooks, twerr)
+		return nil, err
+	}
+
+	callClientResponseReceived(ctx, c.opts.Hooks)
+
+	return out, nil
+}
+
+func (c *temporalServiceProtobufClient) GetWithdrawal(ctx context.Context, in *GetWithdrawalRequest) (*pepeunlimited_twirpkit_resources1.Withdrawal, error) {
+	ctx = ctxsetters.WithPackageName(ctx, "pepeunlimited.twirpkit.services")
+	ctx = ctxsetters.WithServiceName(ctx, "TemporalService")
+	ctx = ctxsetters.WithMethodName(ctx, "GetWithdrawal")
+	caller := c.callGetWithdrawal
+	if c.interceptor != nil {
+		caller = func(ctx context.Context, req *GetWithdrawalRequest) (*pepeunlimited_twirpkit_resources1.Withdrawal, error) {
+			resp, err := c.interceptor(
+				func(ctx context.Context, req interface{}) (interface{}, error) {
+					typedReq, ok := req.(*GetWithdrawalRequest)
+					if !ok {
+						return nil, twirp.InternalError("failed type assertion req.(*GetWithdrawalRequest) when calling interceptor")
+					}
+					return c.callGetWithdrawal(ctx, typedReq)
+				},
+			)(ctx, req)
+			if resp != nil {
+				typedResp, ok := resp.(*pepeunlimited_twirpkit_resources1.Withdrawal)
+				if !ok {
+					return nil, twirp.InternalError("failed type assertion resp.(*pepeunlimited_twirpkit_resources1.Withdrawal) when calling interceptor")
+				}
+				return typedResp, err
+			}
+			return nil, err
+		}
+	}
+	return caller(ctx, in)
+}
+
+func (c *temporalServiceProtobufClient) callGetWithdrawal(ctx context.Context, in *GetWithdrawalRequest) (*pepeunlimited_twirpkit_resources1.Withdrawal, error) {
+	out := new(pepeunlimited_twirpkit_resources1.Withdrawal)
+	ctx, err := doProtobufRequest(ctx, c.client, c.opts.Hooks, c.urls[1], in, out)
+	if err != nil {
+		twerr, ok := err.(twirp.Error)
+		if !ok {
+			twerr = twirp.InternalErrorWith(err)
+		}
+		callClientError(ctx, c.opts.Hooks, twerr)
+		return nil, err
+	}
+
+	callClientResponseReceived(ctx, c.opts.Hooks)
+
+	return out, nil
+}
+
+func (c *temporalServiceProtobufClient) UpdateWithdrawal(ctx context.Context, in *UpdateWithdrawRequest) (*pepeunlimited_twirpkit_resources1.Withdrawal, error) {
+	ctx = ctxsetters.WithPackageName(ctx, "pepeunlimited.twirpkit.services")
+	ctx = ctxsetters.WithServiceName(ctx, "TemporalService")
+	ctx = ctxsetters.WithMethodName(ctx, "UpdateWithdrawal")
+	caller := c.callUpdateWithdrawal
+	if c.interceptor != nil {
+		caller = func(ctx context.Context, req *UpdateWithdrawRequest) (*pepeunlimited_twirpkit_resources1.Withdrawal, error) {
+			resp, err := c.interceptor(
+				func(ctx context.Context, req interface{}) (interface{}, error) {
+					typedReq, ok := req.(*UpdateWithdrawRequest)
+					if !ok {
+						return nil, twirp.InternalError("failed type assertion req.(*UpdateWithdrawRequest) when calling interceptor")
+					}
+					return c.callUpdateWithdrawal(ctx, typedReq)
+				},
+			)(ctx, req)
+			if resp != nil {
+				typedResp, ok := resp.(*pepeunlimited_twirpkit_resources1.Withdrawal)
+				if !ok {
+					return nil, twirp.InternalError("failed type assertion resp.(*pepeunlimited_twirpkit_resources1.Withdrawal) when calling interceptor")
+				}
+				return typedResp, err
+			}
+			return nil, err
+		}
+	}
+	return caller(ctx, in)
+}
+
+func (c *temporalServiceProtobufClient) callUpdateWithdrawal(ctx context.Context, in *UpdateWithdrawRequest) (*pepeunlimited_twirpkit_resources1.Withdrawal, error) {
+	out := new(pepeunlimited_twirpkit_resources1.Withdrawal)
+	ctx, err := doProtobufRequest(ctx, c.client, c.opts.Hooks, c.urls[2], in, out)
 	if err != nil {
 		twerr, ok := err.(twirp.Error)
 		if !ok {
@@ -139,7 +237,7 @@ func (c *temporalServiceProtobufClient) callCreateWithdraw(ctx context.Context, 
 
 type temporalServiceJSONClient struct {
 	client      HTTPClient
-	urls        [1]string
+	urls        [3]string
 	interceptor twirp.Interceptor
 	opts        twirp.ClientOptions
 }
@@ -167,8 +265,10 @@ func NewTemporalServiceJSONClient(baseURL string, client HTTPClient, opts ...twi
 	// Build method URLs: <baseURL>[<prefix>]/<package>.<Service>/<Method>
 	serviceURL := sanitizeBaseURL(baseURL)
 	serviceURL += baseServicePath(pathPrefix, "pepeunlimited.twirpkit.services", "TemporalService")
-	urls := [1]string{
+	urls := [3]string{
 		serviceURL + "CreateWithdraw",
+		serviceURL + "GetWithdrawal",
+		serviceURL + "UpdateWithdrawal",
 	}
 
 	return &temporalServiceJSONClient{
@@ -179,13 +279,13 @@ func NewTemporalServiceJSONClient(baseURL string, client HTTPClient, opts ...twi
 	}
 }
 
-func (c *temporalServiceJSONClient) CreateWithdraw(ctx context.Context, in *CreateWithdrawRequest) (*pepeunlimited_twirpkit_resources.Withdrawal, error) {
+func (c *temporalServiceJSONClient) CreateWithdraw(ctx context.Context, in *CreateWithdrawRequest) (*pepeunlimited_twirpkit_resources1.Withdrawal, error) {
 	ctx = ctxsetters.WithPackageName(ctx, "pepeunlimited.twirpkit.services")
 	ctx = ctxsetters.WithServiceName(ctx, "TemporalService")
 	ctx = ctxsetters.WithMethodName(ctx, "CreateWithdraw")
 	caller := c.callCreateWithdraw
 	if c.interceptor != nil {
-		caller = func(ctx context.Context, req *CreateWithdrawRequest) (*pepeunlimited_twirpkit_resources.Withdrawal, error) {
+		caller = func(ctx context.Context, req *CreateWithdrawRequest) (*pepeunlimited_twirpkit_resources1.Withdrawal, error) {
 			resp, err := c.interceptor(
 				func(ctx context.Context, req interface{}) (interface{}, error) {
 					typedReq, ok := req.(*CreateWithdrawRequest)
@@ -196,9 +296,9 @@ func (c *temporalServiceJSONClient) CreateWithdraw(ctx context.Context, in *Crea
 				},
 			)(ctx, req)
 			if resp != nil {
-				typedResp, ok := resp.(*pepeunlimited_twirpkit_resources.Withdrawal)
+				typedResp, ok := resp.(*pepeunlimited_twirpkit_resources1.Withdrawal)
 				if !ok {
-					return nil, twirp.InternalError("failed type assertion resp.(*pepeunlimited_twirpkit_resources.Withdrawal) when calling interceptor")
+					return nil, twirp.InternalError("failed type assertion resp.(*pepeunlimited_twirpkit_resources1.Withdrawal) when calling interceptor")
 				}
 				return typedResp, err
 			}
@@ -208,9 +308,101 @@ func (c *temporalServiceJSONClient) CreateWithdraw(ctx context.Context, in *Crea
 	return caller(ctx, in)
 }
 
-func (c *temporalServiceJSONClient) callCreateWithdraw(ctx context.Context, in *CreateWithdrawRequest) (*pepeunlimited_twirpkit_resources.Withdrawal, error) {
-	out := new(pepeunlimited_twirpkit_resources.Withdrawal)
+func (c *temporalServiceJSONClient) callCreateWithdraw(ctx context.Context, in *CreateWithdrawRequest) (*pepeunlimited_twirpkit_resources1.Withdrawal, error) {
+	out := new(pepeunlimited_twirpkit_resources1.Withdrawal)
 	ctx, err := doJSONRequest(ctx, c.client, c.opts.Hooks, c.urls[0], in, out)
+	if err != nil {
+		twerr, ok := err.(twirp.Error)
+		if !ok {
+			twerr = twirp.InternalErrorWith(err)
+		}
+		callClientError(ctx, c.opts.Hooks, twerr)
+		return nil, err
+	}
+
+	callClientResponseReceived(ctx, c.opts.Hooks)
+
+	return out, nil
+}
+
+func (c *temporalServiceJSONClient) GetWithdrawal(ctx context.Context, in *GetWithdrawalRequest) (*pepeunlimited_twirpkit_resources1.Withdrawal, error) {
+	ctx = ctxsetters.WithPackageName(ctx, "pepeunlimited.twirpkit.services")
+	ctx = ctxsetters.WithServiceName(ctx, "TemporalService")
+	ctx = ctxsetters.WithMethodName(ctx, "GetWithdrawal")
+	caller := c.callGetWithdrawal
+	if c.interceptor != nil {
+		caller = func(ctx context.Context, req *GetWithdrawalRequest) (*pepeunlimited_twirpkit_resources1.Withdrawal, error) {
+			resp, err := c.interceptor(
+				func(ctx context.Context, req interface{}) (interface{}, error) {
+					typedReq, ok := req.(*GetWithdrawalRequest)
+					if !ok {
+						return nil, twirp.InternalError("failed type assertion req.(*GetWithdrawalRequest) when calling interceptor")
+					}
+					return c.callGetWithdrawal(ctx, typedReq)
+				},
+			)(ctx, req)
+			if resp != nil {
+				typedResp, ok := resp.(*pepeunlimited_twirpkit_resources1.Withdrawal)
+				if !ok {
+					return nil, twirp.InternalError("failed type assertion resp.(*pepeunlimited_twirpkit_resources1.Withdrawal) when calling interceptor")
+				}
+				return typedResp, err
+			}
+			return nil, err
+		}
+	}
+	return caller(ctx, in)
+}
+
+func (c *temporalServiceJSONClient) callGetWithdrawal(ctx context.Context, in *GetWithdrawalRequest) (*pepeunlimited_twirpkit_resources1.Withdrawal, error) {
+	out := new(pepeunlimited_twirpkit_resources1.Withdrawal)
+	ctx, err := doJSONRequest(ctx, c.client, c.opts.Hooks, c.urls[1], in, out)
+	if err != nil {
+		twerr, ok := err.(twirp.Error)
+		if !ok {
+			twerr = twirp.InternalErrorWith(err)
+		}
+		callClientError(ctx, c.opts.Hooks, twerr)
+		return nil, err
+	}
+
+	callClientResponseReceived(ctx, c.opts.Hooks)
+
+	return out, nil
+}
+
+func (c *temporalServiceJSONClient) UpdateWithdrawal(ctx context.Context, in *UpdateWithdrawRequest) (*pepeunlimited_twirpkit_resources1.Withdrawal, error) {
+	ctx = ctxsetters.WithPackageName(ctx, "pepeunlimited.twirpkit.services")
+	ctx = ctxsetters.WithServiceName(ctx, "TemporalService")
+	ctx = ctxsetters.WithMethodName(ctx, "UpdateWithdrawal")
+	caller := c.callUpdateWithdrawal
+	if c.interceptor != nil {
+		caller = func(ctx context.Context, req *UpdateWithdrawRequest) (*pepeunlimited_twirpkit_resources1.Withdrawal, error) {
+			resp, err := c.interceptor(
+				func(ctx context.Context, req interface{}) (interface{}, error) {
+					typedReq, ok := req.(*UpdateWithdrawRequest)
+					if !ok {
+						return nil, twirp.InternalError("failed type assertion req.(*UpdateWithdrawRequest) when calling interceptor")
+					}
+					return c.callUpdateWithdrawal(ctx, typedReq)
+				},
+			)(ctx, req)
+			if resp != nil {
+				typedResp, ok := resp.(*pepeunlimited_twirpkit_resources1.Withdrawal)
+				if !ok {
+					return nil, twirp.InternalError("failed type assertion resp.(*pepeunlimited_twirpkit_resources1.Withdrawal) when calling interceptor")
+				}
+				return typedResp, err
+			}
+			return nil, err
+		}
+	}
+	return caller(ctx, in)
+}
+
+func (c *temporalServiceJSONClient) callUpdateWithdrawal(ctx context.Context, in *UpdateWithdrawRequest) (*pepeunlimited_twirpkit_resources1.Withdrawal, error) {
+	out := new(pepeunlimited_twirpkit_resources1.Withdrawal)
+	ctx, err := doJSONRequest(ctx, c.client, c.opts.Hooks, c.urls[2], in, out)
 	if err != nil {
 		twerr, ok := err.(twirp.Error)
 		if !ok {
@@ -325,6 +517,12 @@ func (s *temporalServiceServer) ServeHTTP(resp http.ResponseWriter, req *http.Re
 	case "CreateWithdraw":
 		s.serveCreateWithdraw(ctx, resp, req)
 		return
+	case "GetWithdrawal":
+		s.serveGetWithdrawal(ctx, resp, req)
+		return
+	case "UpdateWithdrawal":
+		s.serveUpdateWithdrawal(ctx, resp, req)
+		return
 	default:
 		msg := fmt.Sprintf("no handler for path %q", req.URL.Path)
 		s.writeError(ctx, resp, badRouteError(msg, req.Method, req.URL.Path))
@@ -374,7 +572,7 @@ func (s *temporalServiceServer) serveCreateWithdrawJSON(ctx context.Context, res
 
 	handler := s.TemporalService.CreateWithdraw
 	if s.interceptor != nil {
-		handler = func(ctx context.Context, req *CreateWithdrawRequest) (*pepeunlimited_twirpkit_resources.Withdrawal, error) {
+		handler = func(ctx context.Context, req *CreateWithdrawRequest) (*pepeunlimited_twirpkit_resources1.Withdrawal, error) {
 			resp, err := s.interceptor(
 				func(ctx context.Context, req interface{}) (interface{}, error) {
 					typedReq, ok := req.(*CreateWithdrawRequest)
@@ -385,9 +583,9 @@ func (s *temporalServiceServer) serveCreateWithdrawJSON(ctx context.Context, res
 				},
 			)(ctx, req)
 			if resp != nil {
-				typedResp, ok := resp.(*pepeunlimited_twirpkit_resources.Withdrawal)
+				typedResp, ok := resp.(*pepeunlimited_twirpkit_resources1.Withdrawal)
 				if !ok {
-					return nil, twirp.InternalError("failed type assertion resp.(*pepeunlimited_twirpkit_resources.Withdrawal) when calling interceptor")
+					return nil, twirp.InternalError("failed type assertion resp.(*pepeunlimited_twirpkit_resources1.Withdrawal) when calling interceptor")
 				}
 				return typedResp, err
 			}
@@ -396,7 +594,7 @@ func (s *temporalServiceServer) serveCreateWithdrawJSON(ctx context.Context, res
 	}
 
 	// Call service method
-	var respContent *pepeunlimited_twirpkit_resources.Withdrawal
+	var respContent *pepeunlimited_twirpkit_resources1.Withdrawal
 	func() {
 		defer ensurePanicResponses(ctx, resp, s.hooks)
 		respContent, err = handler(ctx, reqContent)
@@ -407,7 +605,7 @@ func (s *temporalServiceServer) serveCreateWithdrawJSON(ctx context.Context, res
 		return
 	}
 	if respContent == nil {
-		s.writeError(ctx, resp, twirp.InternalError("received a nil *pepeunlimited_twirpkit_resources.Withdrawal and nil error while calling CreateWithdraw. nil responses are not supported"))
+		s.writeError(ctx, resp, twirp.InternalError("received a nil *pepeunlimited_twirpkit_resources1.Withdrawal and nil error while calling CreateWithdraw. nil responses are not supported"))
 		return
 	}
 
@@ -455,7 +653,7 @@ func (s *temporalServiceServer) serveCreateWithdrawProtobuf(ctx context.Context,
 
 	handler := s.TemporalService.CreateWithdraw
 	if s.interceptor != nil {
-		handler = func(ctx context.Context, req *CreateWithdrawRequest) (*pepeunlimited_twirpkit_resources.Withdrawal, error) {
+		handler = func(ctx context.Context, req *CreateWithdrawRequest) (*pepeunlimited_twirpkit_resources1.Withdrawal, error) {
 			resp, err := s.interceptor(
 				func(ctx context.Context, req interface{}) (interface{}, error) {
 					typedReq, ok := req.(*CreateWithdrawRequest)
@@ -466,9 +664,9 @@ func (s *temporalServiceServer) serveCreateWithdrawProtobuf(ctx context.Context,
 				},
 			)(ctx, req)
 			if resp != nil {
-				typedResp, ok := resp.(*pepeunlimited_twirpkit_resources.Withdrawal)
+				typedResp, ok := resp.(*pepeunlimited_twirpkit_resources1.Withdrawal)
 				if !ok {
-					return nil, twirp.InternalError("failed type assertion resp.(*pepeunlimited_twirpkit_resources.Withdrawal) when calling interceptor")
+					return nil, twirp.InternalError("failed type assertion resp.(*pepeunlimited_twirpkit_resources1.Withdrawal) when calling interceptor")
 				}
 				return typedResp, err
 			}
@@ -477,7 +675,7 @@ func (s *temporalServiceServer) serveCreateWithdrawProtobuf(ctx context.Context,
 	}
 
 	// Call service method
-	var respContent *pepeunlimited_twirpkit_resources.Withdrawal
+	var respContent *pepeunlimited_twirpkit_resources1.Withdrawal
 	func() {
 		defer ensurePanicResponses(ctx, resp, s.hooks)
 		respContent, err = handler(ctx, reqContent)
@@ -488,7 +686,367 @@ func (s *temporalServiceServer) serveCreateWithdrawProtobuf(ctx context.Context,
 		return
 	}
 	if respContent == nil {
-		s.writeError(ctx, resp, twirp.InternalError("received a nil *pepeunlimited_twirpkit_resources.Withdrawal and nil error while calling CreateWithdraw. nil responses are not supported"))
+		s.writeError(ctx, resp, twirp.InternalError("received a nil *pepeunlimited_twirpkit_resources1.Withdrawal and nil error while calling CreateWithdraw. nil responses are not supported"))
+		return
+	}
+
+	ctx = callResponsePrepared(ctx, s.hooks)
+
+	respBytes, err := proto.Marshal(respContent)
+	if err != nil {
+		s.writeError(ctx, resp, wrapInternal(err, "failed to marshal proto response"))
+		return
+	}
+
+	ctx = ctxsetters.WithStatusCode(ctx, http.StatusOK)
+	resp.Header().Set("Content-Type", "application/protobuf")
+	resp.Header().Set("Content-Length", strconv.Itoa(len(respBytes)))
+	resp.WriteHeader(http.StatusOK)
+	if n, err := resp.Write(respBytes); err != nil {
+		msg := fmt.Sprintf("failed to write response, %d of %d bytes written: %s", n, len(respBytes), err.Error())
+		twerr := twirp.NewError(twirp.Unknown, msg)
+		ctx = callError(ctx, s.hooks, twerr)
+	}
+	callResponseSent(ctx, s.hooks)
+}
+
+func (s *temporalServiceServer) serveGetWithdrawal(ctx context.Context, resp http.ResponseWriter, req *http.Request) {
+	header := req.Header.Get("Content-Type")
+	i := strings.Index(header, ";")
+	if i == -1 {
+		i = len(header)
+	}
+	switch strings.TrimSpace(strings.ToLower(header[:i])) {
+	case "application/json":
+		s.serveGetWithdrawalJSON(ctx, resp, req)
+	case "application/protobuf":
+		s.serveGetWithdrawalProtobuf(ctx, resp, req)
+	default:
+		msg := fmt.Sprintf("unexpected Content-Type: %q", req.Header.Get("Content-Type"))
+		twerr := badRouteError(msg, req.Method, req.URL.Path)
+		s.writeError(ctx, resp, twerr)
+	}
+}
+
+func (s *temporalServiceServer) serveGetWithdrawalJSON(ctx context.Context, resp http.ResponseWriter, req *http.Request) {
+	var err error
+	ctx = ctxsetters.WithMethodName(ctx, "GetWithdrawal")
+	ctx, err = callRequestRouted(ctx, s.hooks)
+	if err != nil {
+		s.writeError(ctx, resp, err)
+		return
+	}
+
+	d := json.NewDecoder(req.Body)
+	rawReqBody := json.RawMessage{}
+	if err := d.Decode(&rawReqBody); err != nil {
+		s.handleRequestBodyError(ctx, resp, "the json request could not be decoded", err)
+		return
+	}
+	reqContent := new(GetWithdrawalRequest)
+	unmarshaler := protojson.UnmarshalOptions{DiscardUnknown: true}
+	if err = unmarshaler.Unmarshal(rawReqBody, reqContent); err != nil {
+		s.handleRequestBodyError(ctx, resp, "the json request could not be decoded", err)
+		return
+	}
+
+	handler := s.TemporalService.GetWithdrawal
+	if s.interceptor != nil {
+		handler = func(ctx context.Context, req *GetWithdrawalRequest) (*pepeunlimited_twirpkit_resources1.Withdrawal, error) {
+			resp, err := s.interceptor(
+				func(ctx context.Context, req interface{}) (interface{}, error) {
+					typedReq, ok := req.(*GetWithdrawalRequest)
+					if !ok {
+						return nil, twirp.InternalError("failed type assertion req.(*GetWithdrawalRequest) when calling interceptor")
+					}
+					return s.TemporalService.GetWithdrawal(ctx, typedReq)
+				},
+			)(ctx, req)
+			if resp != nil {
+				typedResp, ok := resp.(*pepeunlimited_twirpkit_resources1.Withdrawal)
+				if !ok {
+					return nil, twirp.InternalError("failed type assertion resp.(*pepeunlimited_twirpkit_resources1.Withdrawal) when calling interceptor")
+				}
+				return typedResp, err
+			}
+			return nil, err
+		}
+	}
+
+	// Call service method
+	var respContent *pepeunlimited_twirpkit_resources1.Withdrawal
+	func() {
+		defer ensurePanicResponses(ctx, resp, s.hooks)
+		respContent, err = handler(ctx, reqContent)
+	}()
+
+	if err != nil {
+		s.writeError(ctx, resp, err)
+		return
+	}
+	if respContent == nil {
+		s.writeError(ctx, resp, twirp.InternalError("received a nil *pepeunlimited_twirpkit_resources1.Withdrawal and nil error while calling GetWithdrawal. nil responses are not supported"))
+		return
+	}
+
+	ctx = callResponsePrepared(ctx, s.hooks)
+
+	marshaler := &protojson.MarshalOptions{UseProtoNames: !s.jsonCamelCase, EmitUnpopulated: !s.jsonSkipDefaults}
+	respBytes, err := marshaler.Marshal(respContent)
+	if err != nil {
+		s.writeError(ctx, resp, wrapInternal(err, "failed to marshal json response"))
+		return
+	}
+
+	ctx = ctxsetters.WithStatusCode(ctx, http.StatusOK)
+	resp.Header().Set("Content-Type", "application/json")
+	resp.Header().Set("Content-Length", strconv.Itoa(len(respBytes)))
+	resp.WriteHeader(http.StatusOK)
+
+	if n, err := resp.Write(respBytes); err != nil {
+		msg := fmt.Sprintf("failed to write response, %d of %d bytes written: %s", n, len(respBytes), err.Error())
+		twerr := twirp.NewError(twirp.Unknown, msg)
+		ctx = callError(ctx, s.hooks, twerr)
+	}
+	callResponseSent(ctx, s.hooks)
+}
+
+func (s *temporalServiceServer) serveGetWithdrawalProtobuf(ctx context.Context, resp http.ResponseWriter, req *http.Request) {
+	var err error
+	ctx = ctxsetters.WithMethodName(ctx, "GetWithdrawal")
+	ctx, err = callRequestRouted(ctx, s.hooks)
+	if err != nil {
+		s.writeError(ctx, resp, err)
+		return
+	}
+
+	buf, err := ioutil.ReadAll(req.Body)
+	if err != nil {
+		s.handleRequestBodyError(ctx, resp, "failed to read request body", err)
+		return
+	}
+	reqContent := new(GetWithdrawalRequest)
+	if err = proto.Unmarshal(buf, reqContent); err != nil {
+		s.writeError(ctx, resp, malformedRequestError("the protobuf request could not be decoded"))
+		return
+	}
+
+	handler := s.TemporalService.GetWithdrawal
+	if s.interceptor != nil {
+		handler = func(ctx context.Context, req *GetWithdrawalRequest) (*pepeunlimited_twirpkit_resources1.Withdrawal, error) {
+			resp, err := s.interceptor(
+				func(ctx context.Context, req interface{}) (interface{}, error) {
+					typedReq, ok := req.(*GetWithdrawalRequest)
+					if !ok {
+						return nil, twirp.InternalError("failed type assertion req.(*GetWithdrawalRequest) when calling interceptor")
+					}
+					return s.TemporalService.GetWithdrawal(ctx, typedReq)
+				},
+			)(ctx, req)
+			if resp != nil {
+				typedResp, ok := resp.(*pepeunlimited_twirpkit_resources1.Withdrawal)
+				if !ok {
+					return nil, twirp.InternalError("failed type assertion resp.(*pepeunlimited_twirpkit_resources1.Withdrawal) when calling interceptor")
+				}
+				return typedResp, err
+			}
+			return nil, err
+		}
+	}
+
+	// Call service method
+	var respContent *pepeunlimited_twirpkit_resources1.Withdrawal
+	func() {
+		defer ensurePanicResponses(ctx, resp, s.hooks)
+		respContent, err = handler(ctx, reqContent)
+	}()
+
+	if err != nil {
+		s.writeError(ctx, resp, err)
+		return
+	}
+	if respContent == nil {
+		s.writeError(ctx, resp, twirp.InternalError("received a nil *pepeunlimited_twirpkit_resources1.Withdrawal and nil error while calling GetWithdrawal. nil responses are not supported"))
+		return
+	}
+
+	ctx = callResponsePrepared(ctx, s.hooks)
+
+	respBytes, err := proto.Marshal(respContent)
+	if err != nil {
+		s.writeError(ctx, resp, wrapInternal(err, "failed to marshal proto response"))
+		return
+	}
+
+	ctx = ctxsetters.WithStatusCode(ctx, http.StatusOK)
+	resp.Header().Set("Content-Type", "application/protobuf")
+	resp.Header().Set("Content-Length", strconv.Itoa(len(respBytes)))
+	resp.WriteHeader(http.StatusOK)
+	if n, err := resp.Write(respBytes); err != nil {
+		msg := fmt.Sprintf("failed to write response, %d of %d bytes written: %s", n, len(respBytes), err.Error())
+		twerr := twirp.NewError(twirp.Unknown, msg)
+		ctx = callError(ctx, s.hooks, twerr)
+	}
+	callResponseSent(ctx, s.hooks)
+}
+
+func (s *temporalServiceServer) serveUpdateWithdrawal(ctx context.Context, resp http.ResponseWriter, req *http.Request) {
+	header := req.Header.Get("Content-Type")
+	i := strings.Index(header, ";")
+	if i == -1 {
+		i = len(header)
+	}
+	switch strings.TrimSpace(strings.ToLower(header[:i])) {
+	case "application/json":
+		s.serveUpdateWithdrawalJSON(ctx, resp, req)
+	case "application/protobuf":
+		s.serveUpdateWithdrawalProtobuf(ctx, resp, req)
+	default:
+		msg := fmt.Sprintf("unexpected Content-Type: %q", req.Header.Get("Content-Type"))
+		twerr := badRouteError(msg, req.Method, req.URL.Path)
+		s.writeError(ctx, resp, twerr)
+	}
+}
+
+func (s *temporalServiceServer) serveUpdateWithdrawalJSON(ctx context.Context, resp http.ResponseWriter, req *http.Request) {
+	var err error
+	ctx = ctxsetters.WithMethodName(ctx, "UpdateWithdrawal")
+	ctx, err = callRequestRouted(ctx, s.hooks)
+	if err != nil {
+		s.writeError(ctx, resp, err)
+		return
+	}
+
+	d := json.NewDecoder(req.Body)
+	rawReqBody := json.RawMessage{}
+	if err := d.Decode(&rawReqBody); err != nil {
+		s.handleRequestBodyError(ctx, resp, "the json request could not be decoded", err)
+		return
+	}
+	reqContent := new(UpdateWithdrawRequest)
+	unmarshaler := protojson.UnmarshalOptions{DiscardUnknown: true}
+	if err = unmarshaler.Unmarshal(rawReqBody, reqContent); err != nil {
+		s.handleRequestBodyError(ctx, resp, "the json request could not be decoded", err)
+		return
+	}
+
+	handler := s.TemporalService.UpdateWithdrawal
+	if s.interceptor != nil {
+		handler = func(ctx context.Context, req *UpdateWithdrawRequest) (*pepeunlimited_twirpkit_resources1.Withdrawal, error) {
+			resp, err := s.interceptor(
+				func(ctx context.Context, req interface{}) (interface{}, error) {
+					typedReq, ok := req.(*UpdateWithdrawRequest)
+					if !ok {
+						return nil, twirp.InternalError("failed type assertion req.(*UpdateWithdrawRequest) when calling interceptor")
+					}
+					return s.TemporalService.UpdateWithdrawal(ctx, typedReq)
+				},
+			)(ctx, req)
+			if resp != nil {
+				typedResp, ok := resp.(*pepeunlimited_twirpkit_resources1.Withdrawal)
+				if !ok {
+					return nil, twirp.InternalError("failed type assertion resp.(*pepeunlimited_twirpkit_resources1.Withdrawal) when calling interceptor")
+				}
+				return typedResp, err
+			}
+			return nil, err
+		}
+	}
+
+	// Call service method
+	var respContent *pepeunlimited_twirpkit_resources1.Withdrawal
+	func() {
+		defer ensurePanicResponses(ctx, resp, s.hooks)
+		respContent, err = handler(ctx, reqContent)
+	}()
+
+	if err != nil {
+		s.writeError(ctx, resp, err)
+		return
+	}
+	if respContent == nil {
+		s.writeError(ctx, resp, twirp.InternalError("received a nil *pepeunlimited_twirpkit_resources1.Withdrawal and nil error while calling UpdateWithdrawal. nil responses are not supported"))
+		return
+	}
+
+	ctx = callResponsePrepared(ctx, s.hooks)
+
+	marshaler := &protojson.MarshalOptions{UseProtoNames: !s.jsonCamelCase, EmitUnpopulated: !s.jsonSkipDefaults}
+	respBytes, err := marshaler.Marshal(respContent)
+	if err != nil {
+		s.writeError(ctx, resp, wrapInternal(err, "failed to marshal json response"))
+		return
+	}
+
+	ctx = ctxsetters.WithStatusCode(ctx, http.StatusOK)
+	resp.Header().Set("Content-Type", "application/json")
+	resp.Header().Set("Content-Length", strconv.Itoa(len(respBytes)))
+	resp.WriteHeader(http.StatusOK)
+
+	if n, err := resp.Write(respBytes); err != nil {
+		msg := fmt.Sprintf("failed to write response, %d of %d bytes written: %s", n, len(respBytes), err.Error())
+		twerr := twirp.NewError(twirp.Unknown, msg)
+		ctx = callError(ctx, s.hooks, twerr)
+	}
+	callResponseSent(ctx, s.hooks)
+}
+
+func (s *temporalServiceServer) serveUpdateWithdrawalProtobuf(ctx context.Context, resp http.ResponseWriter, req *http.Request) {
+	var err error
+	ctx = ctxsetters.WithMethodName(ctx, "UpdateWithdrawal")
+	ctx, err = callRequestRouted(ctx, s.hooks)
+	if err != nil {
+		s.writeError(ctx, resp, err)
+		return
+	}
+
+	buf, err := ioutil.ReadAll(req.Body)
+	if err != nil {
+		s.handleRequestBodyError(ctx, resp, "failed to read request body", err)
+		return
+	}
+	reqContent := new(UpdateWithdrawRequest)
+	if err = proto.Unmarshal(buf, reqContent); err != nil {
+		s.writeError(ctx, resp, malformedRequestError("the protobuf request could not be decoded"))
+		return
+	}
+
+	handler := s.TemporalService.UpdateWithdrawal
+	if s.interceptor != nil {
+		handler = func(ctx context.Context, req *UpdateWithdrawRequest) (*pepeunlimited_twirpkit_resources1.Withdrawal, error) {
+			resp, err := s.interceptor(
+				func(ctx context.Context, req interface{}) (interface{}, error) {
+					typedReq, ok := req.(*UpdateWithdrawRequest)
+					if !ok {
+						return nil, twirp.InternalError("failed type assertion req.(*UpdateWithdrawRequest) when calling interceptor")
+					}
+					return s.TemporalService.UpdateWithdrawal(ctx, typedReq)
+				},
+			)(ctx, req)
+			if resp != nil {
+				typedResp, ok := resp.(*pepeunlimited_twirpkit_resources1.Withdrawal)
+				if !ok {
+					return nil, twirp.InternalError("failed type assertion resp.(*pepeunlimited_twirpkit_resources1.Withdrawal) when calling interceptor")
+				}
+				return typedResp, err
+			}
+			return nil, err
+		}
+	}
+
+	// Call service method
+	var respContent *pepeunlimited_twirpkit_resources1.Withdrawal
+	func() {
+		defer ensurePanicResponses(ctx, resp, s.hooks)
+		respContent, err = handler(ctx, reqContent)
+	}()
+
+	if err != nil {
+		s.writeError(ctx, resp, err)
+		return
+	}
+	if respContent == nil {
+		s.writeError(ctx, resp, twirp.InternalError("received a nil *pepeunlimited_twirpkit_resources1.Withdrawal and nil error while calling UpdateWithdrawal. nil responses are not supported"))
 		return
 	}
 
@@ -1096,20 +1654,36 @@ func callClientError(ctx context.Context, h *twirp.ClientHooks, err twirp.Error)
 }
 
 var twirpFileDescriptor0 = []byte{
-	// 226 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x84, 0x90, 0xcd, 0x4a, 0xc3, 0x40,
-	0x10, 0xc7, 0x09, 0x42, 0x0f, 0x7b, 0x50, 0x58, 0x50, 0x24, 0x97, 0x8a, 0x27, 0x0f, 0x66, 0x07,
-	0x15, 0xbc, 0x6b, 0xdf, 0xa0, 0x0a, 0x05, 0x2f, 0xb2, 0x6d, 0x87, 0x74, 0x48, 0xb6, 0xbb, 0xce,
-	0xce, 0x26, 0xcf, 0xe0, 0x5b, 0x8b, 0xed, 0x26, 0x10, 0x50, 0x7a, 0x9c, 0x19, 0x7e, 0xff, 0x8f,
-	0x51, 0xf3, 0x88, 0xdc, 0xd1, 0x06, 0x23, 0x08, 0xba, 0xe0, 0xd9, 0xb6, 0x9f, 0x79, 0x63, 0x02,
-	0x7b, 0xf1, 0x7a, 0x1e, 0x30, 0x60, 0xda, 0xb7, 0xe4, 0x48, 0x70, 0x6b, 0xa4, 0x27, 0x0e, 0x0d,
-	0x89, 0x19, 0xb8, 0xb2, 0x64, 0x8c, 0x3e, 0xf1, 0xaf, 0x44, 0x4f, 0xb2, 0xdb, 0xb2, 0xed, 0x6d,
-	0x7b, 0x84, 0x6f, 0x41, 0x5d, 0x2e, 0x18, 0xad, 0xe0, 0x2a, 0x5f, 0x96, 0xf8, 0x95, 0x30, 0x8a,
-	0xbe, 0x52, 0x33, 0xeb, 0x7c, 0xda, 0xcb, 0x75, 0x71, 0x53, 0xdc, 0x9d, 0x2d, 0xf3, 0xf4, 0xf8,
-	0x5d, 0xa8, 0x8b, 0xf7, 0x1c, 0xe4, 0xed, 0xe8, 0xa0, 0x3b, 0x75, 0x3e, 0x15, 0xd1, 0xcf, 0xe6,
-	0x44, 0x28, 0xf3, 0xa7, 0x6b, 0x79, 0xff, 0x1f, 0x37, 0x56, 0x30, 0xab, 0xb1, 0xc2, 0xeb, 0xe2,
-	0xe3, 0xa5, 0x26, 0xd9, 0xa5, 0xb5, 0xd9, 0x78, 0x07, 0x13, 0x12, 0x6a, 0x5f, 0x1d, 0xe0, 0x2a,
-	0x8a, 0x65, 0x41, 0xae, 0x1a, 0x12, 0x08, 0x4d, 0x0d, 0x36, 0x10, 0x74, 0x0f, 0x30, 0x04, 0x59,
-	0xcf, 0x0e, 0x8f, 0x78, 0xfa, 0x09, 0x00, 0x00, 0xff, 0xff, 0xc3, 0xeb, 0x3d, 0x09, 0x68, 0x01,
-	0x00, 0x00,
+	// 488 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x53, 0x4d, 0x6f, 0xd3, 0x40,
+	0x10, 0x6d, 0x12, 0x11, 0x94, 0x09, 0x6d, 0xaa, 0x15, 0x85, 0xc8, 0x97, 0x54, 0x39, 0x20, 0x0e,
+	0x64, 0x4d, 0x8d, 0x40, 0x42, 0x9c, 0x68, 0x25, 0x48, 0x40, 0x1c, 0x30, 0xa0, 0x4a, 0x5c, 0xa2,
+	0x4d, 0x3d, 0x71, 0x57, 0xfe, 0xd8, 0xed, 0x7a, 0x37, 0x86, 0x3f, 0xc3, 0xcf, 0x44, 0xe2, 0x86,
+	0xfc, 0x95, 0xd4, 0x51, 0xaa, 0xd4, 0x37, 0xef, 0x7a, 0xe6, 0xbd, 0x37, 0xef, 0xcd, 0xc2, 0x28,
+	0x41, 0xb5, 0xe2, 0x57, 0x98, 0xd8, 0x1a, 0x23, 0x29, 0x14, 0x0b, 0xe7, 0xe5, 0x0d, 0x95, 0x4a,
+	0x68, 0x41, 0x46, 0x12, 0x25, 0x9a, 0x38, 0xe4, 0x11, 0xd7, 0xe8, 0x51, 0x9d, 0x72, 0x25, 0x03,
+	0xae, 0x69, 0xd5, 0x67, 0x59, 0x0a, 0x13, 0x61, 0x54, 0x06, 0x91, 0x72, 0x7d, 0xed, 0x29, 0x96,
+	0xb2, 0xb0, 0x68, 0xb6, 0x4e, 0x7d, 0x21, 0xfc, 0x10, 0xed, 0xfc, 0xb4, 0x30, 0x4b, 0x7b, 0xc9,
+	0x31, 0xf4, 0xe6, 0x11, 0x4b, 0x82, 0xa2, 0x62, 0x3c, 0x85, 0x93, 0x0b, 0x85, 0x4c, 0xe3, 0x65,
+	0xd9, 0xeb, 0xe2, 0x8d, 0xc1, 0x44, 0x93, 0x27, 0xd0, 0x65, 0x91, 0x30, 0xb1, 0x1e, 0xb6, 0x4e,
+	0x5b, 0xcf, 0x3b, 0x6e, 0x79, 0x22, 0x4f, 0xe1, 0xa1, 0x49, 0x50, 0xcd, 0xb9, 0x37, 0x6c, 0x17,
+	0x3f, 0xb2, 0xe3, 0xcc, 0x1b, 0xff, 0x6d, 0xc1, 0xe3, 0x8f, 0xa8, 0x2f, 0xd7, 0x1a, 0x2a, 0xa4,
+	0xb7, 0x00, 0x1b, 0xda, 0x1c, 0xad, 0xef, 0x58, 0xb4, 0x50, 0x46, 0x2b, 0x65, 0xf4, 0x43, 0x56,
+	0xf2, 0x85, 0x25, 0x81, 0xdb, 0x5b, 0x56, 0x9f, 0x64, 0x0a, 0x0f, 0x6e, 0x0c, 0xaa, 0xdf, 0x39,
+	0x55, 0xdf, 0x79, 0x49, 0xf7, 0x98, 0x41, 0xbf, 0x66, 0xd5, 0x1b, 0x09, 0xd3, 0x03, 0xb7, 0x00,
+	0x20, 0x9f, 0xa1, 0x9b, 0x7f, 0x38, 0xc3, 0x4e, 0x0e, 0x75, 0xd6, 0x14, 0xca, 0x99, 0x1e, 0xb8,
+	0x25, 0xc4, 0xf9, 0x23, 0x00, 0xc9, 0x14, 0x8b, 0x30, 0xd6, 0xa8, 0xc6, 0x09, 0x0c, 0xb6, 0x6a,
+	0xc9, 0x08, 0xfa, 0xa9, 0x50, 0xc1, 0x32, 0x14, 0x69, 0x66, 0x54, 0x36, 0x73, 0xcf, 0x85, 0xea,
+	0x6a, 0xe6, 0x91, 0x67, 0x30, 0x58, 0x17, 0x28, 0x13, 0x57, 0x6e, 0xf6, 0xdc, 0xc3, 0xea, 0xda,
+	0x35, 0xf1, 0xcc, 0xbb, 0xed, 0x76, 0xa7, 0xe6, 0xf6, 0x3b, 0x38, 0xde, 0x16, 0x48, 0x8e, 0xa0,
+	0xbd, 0x26, 0x6b, 0x73, 0xef, 0xee, 0xa8, 0xfe, 0xb4, 0xe0, 0xe4, 0x87, 0xf4, 0x76, 0xa4, 0xfe,
+	0x09, 0x7a, 0x42, 0xa2, 0x62, 0x9a, 0x8b, 0xb8, 0x8c, 0xea, 0xc5, 0x5d, 0x4e, 0xad, 0xf7, 0x8e,
+	0xde, 0xca, 0x7c, 0xd3, 0xbe, 0x95, 0x7b, 0xbb, 0x41, 0xee, 0xce, 0xbf, 0x36, 0x0c, 0xbe, 0x97,
+	0xef, 0xe1, 0x5b, 0x11, 0x08, 0x59, 0xc1, 0x51, 0x7d, 0x53, 0xc9, 0x9b, 0xbd, 0x19, 0xee, 0x5c,
+	0x6d, 0xab, 0xd1, 0x44, 0x44, 0xc3, 0x61, 0x6d, 0xad, 0xc9, 0xeb, 0xbd, 0xb4, 0xbb, 0x9e, 0x41,
+	0x43, 0xd6, 0x5f, 0x70, 0x5c, 0x4f, 0x88, 0x85, 0xf7, 0x98, 0x77, 0x67, 0xa8, 0xcd, 0x98, 0xcf,
+	0x2f, 0x7e, 0xbe, 0xf7, 0xb9, 0xbe, 0x36, 0x0b, 0x7a, 0x25, 0x22, 0xbb, 0xd6, 0x69, 0xfb, 0x62,
+	0x92, 0x37, 0x4f, 0x12, 0xcd, 0x94, 0x46, 0x35, 0x09, 0xb8, 0xb6, 0x65, 0xe0, 0xdb, 0x4c, 0x72,
+	0x7b, 0x75, 0x66, 0x57, 0x42, 0x16, 0xdd, 0x3c, 0xdf, 0x57, 0xff, 0x03, 0x00, 0x00, 0xff, 0xff,
+	0x98, 0x13, 0xf8, 0xf8, 0xdf, 0x04, 0x00, 0x00,
 }
