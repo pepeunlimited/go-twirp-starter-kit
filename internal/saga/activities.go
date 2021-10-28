@@ -25,7 +25,7 @@ func (a *Activities) Withdraw(ctx context.Context, request *services.CreateWithd
 	//var twerr twirp.Error
 	//if ok := errors.As(err, &twerr); ok {
 	// 	twerr
-	//	return nil, temporal.NewApplicationError(twerr.Msg(), "twerr", twerr.Code())
+	//	return nil, temporal.NewApplicationError(twerr.Msg(), TwirpErrorCode, twerr.Code())
 	// }
 	// unkwnerr
 	// return nil, temporal.NewApplicationError(err.Error(), "unkwnerr")

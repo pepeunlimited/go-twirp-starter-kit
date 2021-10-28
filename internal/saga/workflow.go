@@ -86,7 +86,7 @@ func SagaWorkflow(ctx workflow.Context, request *services.CreateWithdrawRequest)
 		var apperr *temporal.ApplicationError
 		if errors.As(err, &apperr) {
 			switch apperr.Type() {
-			case "twerr":
+			case TwirpErrorCode:
 				// decode twirp.ErrorCode
 				var twerrCode twirp.ErrorCode
 				if err := apperr.Details(&twerrCode); err != nil {
