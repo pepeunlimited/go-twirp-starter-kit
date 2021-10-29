@@ -121,6 +121,10 @@ func SagaWorkflow(ctx workflow.Context, request *services.CreateWithdrawRequest)
 			default:
 			}
 		}
+		var terminatederr *temporal.TerminatedError
+		if errors.As(err, &terminatederr) {
+			// TODO: terminated error
+		}
 		var panicerr *temporal.PanicError
 		if errors.As(err, &panicerr) {
 			// TODO: panicerr panicErr.Error(), panicErr.StackTrace()

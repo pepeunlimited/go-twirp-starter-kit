@@ -2,19 +2,22 @@ package twirp
 
 import (
 	"context"
+	"errors"
 	"sort"
 	"time"
 
 	"github.com/google/uuid"
 	"github.com/mennanov/fmutils"
-	"github.com/twitchtv/twirp"
 	"github.com/pepeunlimited/go-twirp-starter-kit/internal/saga"
 	"github.com/pepeunlimited/go-twirp-starter-kit/pkg/api/v1/enums"
 	"github.com/pepeunlimited/go-twirp-starter-kit/pkg/api/v1/resources"
 	"github.com/pepeunlimited/go-twirp-starter-kit/pkg/api/v1/services"
 	"github.com/pepeunlimited/go-twirp-starter-kit/pkg/fm"
+	"github.com/pepeunlimited/go-twirp-starter-kit/pkg/tmp"
+	"github.com/twitchtv/twirp"
 
 	"go.temporal.io/api/common/v1"
+	"go.temporal.io/api/serviceerror"
 	"go.temporal.io/api/workflowservice/v1"
 	"go.temporal.io/sdk/client"
 	"google.golang.org/protobuf/proto"
@@ -44,7 +47,12 @@ func (server TemporalServer) CreateWithdraw(ctx context.Context, request *servic
 	}
 	workflowRun, err := server.temporalClient.ExecuteWorkflow(ctx, options, saga.SagaWorkflow, request)
 	if err != nil {
-		return nil, twirp.InternalError(err.Error())
+		var svcerr serviceerror.ServiceError
+		if errors.As(err, &svcerr) {
+			return nil, tmp.Twerr(svcerr)
+		} else {
+			return nil, twirp.InternalErrorWith(err)
+		}
 	}
 	// synchronously => waiting the result of the workflow (workflowRun.Get(ctx, ptr))
 	// var resourcesWithdrawal *resources.Withdrawal
@@ -99,22 +107,32 @@ func (server TemporalServer) GetWithdrawal(ctx context.Context, request *service
 	var resourcesWithdrawal *resources.Withdrawal
 	switch u := request.Paramenter.(type) {
 	case *services.GetWithdrawalRequest_Query:
-		q, err := server.temporalClient.QueryWorkflow(ctx, u.Query.WorkflowId, u.Query.WorkflowRunId, saga.QuerySagaWorkflow)
-		if err != nil {
-			return nil, twirp.InternalError(err.Error())
-		}
-		if err := q.Get(&resourcesWithdrawal); err != nil {
-			return nil, twirp.InternalError(err.Error())
+		if q, err := server.temporalClient.QueryWorkflow(ctx, u.Query.WorkflowId, u.Query.WorkflowRunId, saga.QuerySagaWorkflow); err != nil {
+			var svcerr serviceerror.ServiceError
+			if errors.As(err, &svcerr) {
+				return nil, tmp.Twerr(svcerr)
+			} else {
+				return nil, twirp.InternalErrorWith(err)
+			}
+		} else {
+			if err := q.Get(&resourcesWithdrawal); err != nil {
+				return nil, twirp.InternalErrorWith(err)
+			}
 		}
 		if withWorkflow {
-			w, err := server.temporalClient.DescribeWorkflowExecution(ctx, u.Query.WorkflowId, u.Query.WorkflowRunId)
-			if err != nil {
-				return nil, twirp.InternalError(err.Error())
+			if w, err := server.temporalClient.DescribeWorkflowExecution(ctx, u.Query.WorkflowId, u.Query.WorkflowRunId); err != nil {
+				var svcerr serviceerror.ServiceError
+				if errors.As(err, &svcerr) {
+					return nil, tmp.Twerr(svcerr)
+				} else {
+					return nil, twirp.InternalErrorWith(err)
+				}
+			} else {
+				resourcesWithdrawal.Workflow.WorkflowId = w.WorkflowExecutionInfo.Execution.WorkflowId
+				resourcesWithdrawal.Workflow.WorkflowRunId = w.WorkflowExecutionInfo.Execution.RunId
+				resourcesWithdrawal.Workflow.Status = enums.WorkflowStatus(w.WorkflowExecutionInfo.Status)
+				//resourcesWithdrawal.Workflow.Namespace = // DescribeWorkflowExecution doesn't contain `Namespace` property. `QueryWorkflow` returns it
 			}
-			resourcesWithdrawal.Workflow.WorkflowId = w.WorkflowExecutionInfo.Execution.WorkflowId
-			resourcesWithdrawal.Workflow.WorkflowRunId = w.WorkflowExecutionInfo.Execution.RunId
-			resourcesWithdrawal.Workflow.Status = enums.WorkflowStatus(w.WorkflowExecutionInfo.Status)
-			//resourcesWithdrawal.Workflow.Namespace = // DescribeWorkflowExecution doesn't contain `Namespace` property. `QueryWorkflow` returns it
 		}
 		// verify permission for the withdrawal
 		if u.Query.UserId != resourcesWithdrawal.UserId {
@@ -165,7 +183,12 @@ func (server TemporalServer) UpdateWithdrawal(ctx context.Context, request *serv
 		switch updateWithMaskedFieldMask.Workflow.Status {
 		case enums.WorkflowStatus_WORKFLOW_STATUS_CANCELED:
 			if err := server.temporalClient.CancelWorkflow(ctx, updateWithMaskedFieldMask.Id, updateWithMaskedFieldMask.Workflow.WorkflowRunId); err != nil {
-				return nil, twirp.InternalError(err.Error())
+				var svcerr serviceerror.ServiceError
+				if errors.As(err, &svcerr) {
+					return nil, tmp.Twerr(svcerr)
+				} else {
+					return nil, twirp.InternalErrorWith(err)
+				}
 			}
 		case enums.WorkflowStatus_WORKFLOW_STATUS_RUNNING:
 			if result, err := server.temporalClient.ResetWorkflowExecution(ctx, &workflowservice.ResetWorkflowExecutionRequest{
@@ -177,7 +200,12 @@ func (server TemporalServer) UpdateWithdrawal(ctx context.Context, request *serv
 				Namespace:                 updateWithMaskedFieldMask.Workflow.Namespace,
 				WorkflowTaskFinishEventId: 4,
 			}); err != nil {
-				return nil, twirp.InternalError(err.Error())
+				var svcerr serviceerror.ServiceError
+				if errors.As(err, &svcerr) {
+					return nil, tmp.Twerr(svcerr)
+				} else {
+					return nil, twirp.InternalErrorWith(err)
+				}
 			} else {
 				updateWithMaskedFieldMask.Workflow.WorkflowRunId = result.RunId
 			}
